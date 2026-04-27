@@ -3,22 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ฟอนต์ในเครือ MSB - Baby Bennie</title>
+<title>กลุ่มในเครือ MSB - Baby Bennie</title>
 <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{ --bg:#FFF0F6; --main:#F6A5C9; --dark:#E889B5; --white:#FFFFFF; --blue:#B9E5F3; }
+:root{ --bg:#FFF0F6; --main:#F6A5C9; --dark:#E889B5; --white:#FFFFFF; --purple:#E2D1F9; }
 body{ background:var(--bg); font-family:'Mitr',sans-serif; display:flex; justify-content:center; padding:20px; margin:0; }
 .container{ max-width:500px; width:100%; }
 .section{ background:var(--white); border-radius:25px; overflow:hidden; border:2px solid var(--main); box-shadow:0 8px 20px rgba(0,0,0,0.05); padding-bottom: 25px; }
 .header-img { width: 100%; display: block; border-bottom: 2px solid var(--main); }
-.title-bar { background: var(--blue); color: #333; text-align: center; padding: 10px; font-weight: 500; font-size: 18px; }
+.title-bar { background: var(--purple); color: #333; text-align: center; padding: 10px; font-weight: 500; font-size: 18px; }
 table { width: 100%; border-collapse: collapse; }
 th { background-color: #f8f9fa; color: var(--dark); padding: 12px 8px; border-bottom: 2px solid #eee; font-size: 14px; }
 td { padding: 12px 8px; border-bottom: 1px solid #ffeef5; color: #555; text-align: center; font-size: 14px; }
-.type-badge { padding: 3px 10px; border-radius: 12px; font-size: 12px; color: white; }
-.type-blue { background: #90D5FF; }
-.type-gold { background: #FFD25A; }
-.type-pink { background: #FF90C2; }
+.type-badge { padding: 3px 10px; border-radius: 12px; font-size: 12px; color: white; display: inline-block; min-width: 80px; }
+/* สี Badge ตามประเภทกลุ่ม */
+.type-part { background: #FFD25A; } /* กลุ่มชิ้นส่วน */
+.type-block { background: #8CD4B0; } /* กลุ่มบล็อก */
+.type-effect { background: #B298E1; } /* กลุ่มเอฟเฟค */
+.type-line { background: #FF90C2; } /* กลุ่มลายเส้น */
+.type-font { background: #E15A7A; } /* กลุ่มฟอนต์ */
+.type-toon { background: #F2A25C; } /* กลุ่มตูน */
 .price { font-weight: bold; color: var(--dark); }
 .btn-back { display: block; text-align: center; padding: 12px; background: var(--main); color: white; text-decoration: none; border-radius: 25px; font-weight: 500; margin: 20px; }
 </style>
@@ -26,45 +30,44 @@ td { padding: 12px 8px; border-bottom: 1px solid #ffeef5; color: #555; text-alig
 <body>
 <div class="container">
     <div class="section">
-        <img src="12.png" alt="Header MSB" class="header-img">
+        <img src="12.png" alt="Header MSB Groups" class="header-img">
         
-        <div class="title-bar">รายการฟอนต์</div>
+        <div class="title-bar">รายการกลุ่มในเครือ</div>
         
         <table>
             <thead>
                 <tr>
-                    <th>ชื่อฟอนต์</th>
+                    <th>ชื่อกลุ่ม</th>
                     <th>ประเภท</th>
-                    <th>ราคา</th>
+                    <th>ค่าเข้า</th>
                 </tr>
             </thead>
             <tbody>
-                <tr><td>ของเล่น</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>คะนึงฝัน</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>จอมแก่น</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>ไทยากิ</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>เจ้าแสบ</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>ชาพีช</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>ซานต้า</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>เซย์เยส</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>ดอกไม้ไฟ</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>ตัวเริ่ด</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>ถ้วยฟู</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>เนยสด</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>เผลอยิ้ม</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>เมฆซน</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>เมาฮัก</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>รสแซ่บ</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>ลองรัก</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>แสงจันทร์</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>หม่าล่าทั่ง</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>อิ่มเอม</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>หวานยิ้ม</td><td><span class="type-badge type-gold">ฟอนต์โปร่ง</span></td><td class="price">59.-</td></tr>
-                <tr><td>ตัวเล็ก</td><td><span class="type-badge type-gold">ฟอนต์โปร่ง</span></td><td class="price">59.-</td></tr>
-                <tr><td>bubblepop</td><td><span class="type-badge type-pink">ฟอนต์อิโมจิ</span></td><td class="price">59.-</td></tr>
-                <tr><td>Beloved</td><td><span class="type-badge type-pink">ฟอนต์อิโมจิ</span></td><td class="price">59.-</td></tr>
-                <tr><td>ขนมโตเกียว v.1</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>ขนมโตเกียว v.2</td><td><span class="type-badge type-gold">ฟอนต์โปร่ง</span></td><td class="price">59.-</td></tr>
+                <tr><td>benny parts</td><td><span class="type-badge type-part">กลุ่มชิ้นส่วน</span></td><td class="price">69.-</td></tr>
+                <tr><td>lunar parts</td><td><span class="type-badge type-part">กลุ่มชิ้นส่วน</span></td><td class="price">39.-</td></tr>
+                <tr><td>ketchie parts</td><td><span class="type-badge type-part">กลุ่มชิ้นส่วน</span></td><td class="price">39.-</td></tr>
+                <tr><td>Smart parts</td><td><span class="type-badge type-part">กลุ่มชิ้นส่วน</span></td><td class="price">59.-</td></tr>
+                <tr><td>sticky parts</td><td><span class="type-badge type-part">กลุ่มชิ้นส่วน</span></td><td class="price">59.-</td></tr>
+                <tr><td>melody block</td><td><span class="type-badge type-part">กลุ่มชิ้นส่วน</span></td><td class="price">59.-</td></tr>
+                <tr><td>Box Yaiaom</td><td><span class="type-badge type-block">กลุ่มบล็อก</span></td><td class="price">79.-</td></tr>
+                <tr><td>Baby piglet</td><td><span class="type-badge type-block">กลุ่มบล็อก</span></td><td class="price">39.-</td></tr>
+                <tr><td>Rubyjally block</td><td><span class="type-badge type-block">กลุ่มบล็อก</span></td><td class="price">39.-</td></tr>
+                <tr><td>Miji Rainy</td><td><span class="type-badge type-block">กลุ่มบล็อก</span></td><td class="price">59.-</td></tr>
+                <tr><td>mochibear block</td><td><span class="type-badge type-block">กลุ่มบล็อก</span></td><td class="price">39.-</td></tr>
+                <tr><td>Fairy charmer</td><td><span class="type-badge type-block">กลุ่มบล็อก</span></td><td class="price">39.-</td></tr>
+                <tr><td>คุกกี้เรนนี่</td><td><span class="type-badge type-block">กลุ่มบล็อก</span></td><td class="price">39.-</td></tr>
+                <tr><td>Baby บ็อกบ็อก</td><td><span class="type-badge type-block">กลุ่มบล็อก</span></td><td class="price">39.-</td></tr>
+                <tr><td>บล็อกกรุบกรอบ</td><td><span class="type-badge type-block">กลุ่มบล็อก</span></td><td class="price">39.-</td></tr>
+                <tr><td>Gingery effect</td><td><span class="type-badge type-effect">กลุ่มเอฟเฟค</span></td><td class="price">39.-</td></tr>
+                <tr><td>candy mello</td><td><span class="type-badge type-line">กลุ่มลายเส้น</span></td><td class="price">49.-</td></tr>
+                <tr><td>Peachiineko</td><td><span class="type-badge type-line">กลุ่มลายเส้น</span></td><td class="price">19.-</td></tr>
+                <tr><td>pinky pompom</td><td><span class="type-badge type-line">กลุ่มลายเส้น</span></td><td class="price">29.-</td></tr>
+                <tr><td>sammy sumsum</td><td><span class="type-badge type-line">กลุ่มลายเส้น</span></td><td class="price">19.-</td></tr>
+                <tr><td>my little penut</td><td><span class="type-badge type-line">กลุ่มลายเส้น</span></td><td class="price">29.-</td></tr>
+                <tr><td>Puppip font</td><td><span class="type-badge type-font">กลุ่มฟอนต์</span></td><td class="price">69.-</td></tr>
+                <tr><td>Dorliytel</td><td><span class="type-badge type-toon">กลุ่มตูน</span></td><td class="price">119.-</td></tr>
+                <tr><td>zebell box v.1</td><td><span class="type-badge type-block">กลุ่มบล็อก</span></td><td class="price">99.-</td></tr>
+                <tr><td>zebell box v.2</td><td><span class="type-badge type-block">กลุ่มบล็อก</span></td><td class="price">69.-</td></tr>
             </tbody>
         </table>
         
@@ -73,4 +76,3 @@ td { padding: 12px 8px; border-bottom: 1px solid #ffeef5; color: #555; text-alig
 </div>
 </body>
 </html>
-
