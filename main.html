@@ -18,11 +18,14 @@ body{
 background:var(--bg);
 display:flex;
 justify-content:center;
+overflow-x: hidden; /* กันอิโมจิทำจอเลื่อน */
 }
 .container{
 max-width:500px;
 width:100%;
 padding:20px 15px 40px;
+position: relative;
+z-index: 1; /* ให้เนื้อหาอยู่เหนืออิโมจิ */
 }
 .section{
 background:var(--white);
@@ -133,10 +136,32 @@ font-size:13px;
 border:1px solid #ffeef5;
 }
 .small{font-size:12px;opacity:.7;margin-top:10px;}
+
+/* --- ส่วนของอิโมจิลอยไปมา --- */
+.floating-emoji {
+    position: fixed;
+    bottom: -10%;
+    z-index: 0; /* อยู่หลัง Container */
+    user-select: none;
+    pointer-events: none;
+    opacity: 0.3; /* ความจาง */
+    font-size: 24px;
+    animation: floatUp linear infinite;
+}
+@keyframes floatUp {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+    20% { opacity: 0.3; }
+    80% { opacity: 0.3; }
+    100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+}
 </style>
 </head>
 <body>
+
+<div id="emoji-container"></div>
+
 <div class="container">
+
 <div class="section center" style="border:none;box-shadow:none;background:transparent;">
 <div class="logo">
 <img src="Logo.png" alt="Baby Bennie Logo">
@@ -182,6 +207,21 @@ border:1px solid #ffeef5;
 <a href="https://lin.ee/YxqG5K7" class="btn btn-main">สอบถามแอดมิน</a>
 </div>
 
+<div class="section center">
+    <h2 style="margin-bottom: 15px;">💳 ช่องทางการชำระเงิน</h2>
+    <div style="margin-bottom: 15px;">
+        <img src="320_20251114235257.png" alt="บัญชีธนาคาร" style="width: 100%; max-width: 300px; border-radius: 15px; border: 1px solid #ffeef5;">
+    </div>
+    <div style="padding: 15px; border-radius: 15px; background: #fff5f8; border: 1px dashed var(--main);">
+        <p style="color: #d63384; font-weight: 500; font-size: 14px; margin-bottom: 8px;">
+            “โปรดส่งสลิปในหน้าแชทร้านด้วย เผื่อกันตกหล่นนะคะ”
+        </p>
+        <p style="color: #ff4d4d; font-weight: bold; font-size: 15px;">
+            ⚠️ หากไม่ทราบยอดแน่ชัด รบกวนทักแอดมินก่อนโอน !
+        </p>
+    </div>
+</div>
+
 <div class="footer">
 <p class="small" style="margin-bottom:15px; color:var(--dark);">📍 โอนเงินแล้วไม่คืนเงินทุกกรณี / เปลี่ยนช่องทางรับก่อนส่งงานเสร็จ</p>
 
@@ -202,5 +242,24 @@ border:1px solid #ffeef5;
 </div>
 
 </div>
+
+<script>
+    const emojis = ['🐶', '⭐️', '🌷', '🩷'];
+    const container = document.getElementById('emoji-container');
+
+    function createEmoji() {
+        const emoji = document.createElement('div');
+        emoji.className = 'floating-emoji';
+        emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        emoji.style.left = Math.random() * 100 + 'vw';
+        emoji.style.fontSize = (Math.random() * 20 + 20) + 'px';
+        const duration = Math.random() * 10 + 10;
+        emoji.style.animationDuration = duration + 's';
+        container.appendChild(emoji);
+        setTimeout(() => { emoji.remove(); }, duration * 1000);
+    }
+    setInterval(createEmoji, 1500);
+</script>
+
 </body>
 </html>
