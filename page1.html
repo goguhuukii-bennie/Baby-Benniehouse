@@ -1,48 +1,115 @@
-<!DOCTYPE html>
-<html lang="th">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>กลุ่มในเครือ MSB - Baby Bennie</title>
-<link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-    :root{ --bg:#FFF0F6; --main:#F6A5C9; --dark:#E889B5; --white:#FFFFFF; --purple:#E2D1F9; }
-    *{ margin:0; padding:0; box-sizing:border-box; }
-    body{ background:var(--bg); font-family:'Mitr',sans-serif; display:flex; justify-content:center; padding:20px; margin:0; overflow-x: hidden; position: relative; }
+<script>
+    const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSac_ZH2_OR2X_sT9EnZLqXuzqO7IBxJo5qChEsuR1w8RsGCBDxb1jpVLf_n3p7hBORcagesRlm4wmx/pub?gid=515002157&single=true&output=csv';
     
-    .container{ max-width:600px; width:100%; z-index: 1; }
-    .section{ background:var(--white); border-radius:25px; overflow:hidden; border:2px solid var(--main); box-shadow:0 8px 20px rgba(0,0,0,0.05); padding-bottom: 25px; }
-    .header-img { width: 100%; display: block; border-bottom: 2px solid var(--main); }
-    .title-bar { background: var(--purple); color: #333; text-align: center; padding: 10px; font-weight: 500; font-size: 18px; }
-    
-    table { width: 100%; border-collapse: collapse; }
-    th { background-color: #f8f9fa; color: var(--dark); padding: 12px 5px; border-bottom: 2px solid #eee; font-size: 13px; }
-    td { padding: 10px 5px; border-bottom: 1px solid #ffeef5; color: #555; text-align: center; font-size: 12px; vertical-align: middle; }
-    
-    .product-img { width: 45px; height: 45px; border-radius: 8px; object-fit: cover; border: 1px solid #eee; cursor: zoom-in; transition: 0.3s; }
-    .product-img:hover { transform: scale(1.1); }
-    
-    .type-badge { padding: 2px 6px; border-radius: 10px; font-size: 10px; color: white; display: inline-block; min-width: 60px; }
-    .type-ชิ้นส่วน { background: #FFD25A; } 
-    .type-บล็อก { background: #8CD4B0; } 
-    .type-เอฟเฟค { background: #B298E1; }
-    .type-ลายเส้น { background: #FF90C2; } 
-    .type-ฟอนต์ { background: #E15A7A; } 
-    .type-ตูน { background: #F2A25C; }
-    
-    .price-old { color: #555; font-size: 12px; }
-    .price-admin { font-weight: bold; color: #E15A7A; font-size: 13px; }
-    .btn-back { display: block; text-align: center; padding: 12px; background: var(--main); color: white; text-decoration: none; border-radius: 25px; font-weight: 500; margin: 20px; box-shadow: 0 4px 10px var(--main); }
+    async function fetchData() {
+        try {
+            const response = await fetch(sheetURL);
+            const data = await response.text();
+            
+            // แยกบรรทัดข้อมูล
+            const rows = data.split(/\r?\n/);
+            let html = '';
+            
+            // เริ่มวนลูปตั้งแต่แถวที่ 2 (i=1)
+            for (let i = 1; i < rows.length; i++) {
+                if (!rows[i]) continue; // ถ้าบรรทัดว่างให้ข้าม
 
-    /* --- สไตล์ Modal (ป๊อปอัพขยายรูป) --- */
-    .modal {
-        display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%;
-        background-color: rgba(0,0,0,0.8); backdrop-filter: blur(5px); justify-content: center; align-items: center; padding: 20px;
+                // ใช้ Regex แยกคอมม่าแบบฉลาด (กันปัญหาเครื่องหมายพิเศษในช่อง F)
+                const cols = rows[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                
+                // เช็คว่ามีชื่อกลุ่ม (คอลัมน์ B) หรือไม่ ถ้ามีให้แสดงผลเลย
+                if (cols.length >= 2 && cols[1] && cols[1].trim() !== "" && !cols[1].includes("ชื่อกลุ่ม")) {
+                    
+                    // ดึงข้อมูลแต่ละช่องแบบระวังตัวพิมพ์ใหญ่/เล็ก และช่องว่าง
+                    let imgRaw = cols[0] ? cols[0].replace(/"/g, '').trim() : '';
+                    if (imgRaw.toLowerCase().startsWith('http')) {
+                        imgRaw = imgRaw.replace(/^Https:/i, 'https:');
+                    }
+
+                    const name = cols[1] ? cols[1].replace(/"/g, '').trim() : 'ไม่มีชื่อกลุ่ม';
+                    const type = cols[2] ? cols[2].replace(/"/g, '').trim() : 'ทั่วไป';
+                    const priceD = cols[3] ? cols[3].replace(/"/g, '').trim() : '-';
+                    const priceE = cols[4] ? cols[4].replace(/"/g, '').trim() : '-';
+                    
+                    // ดึงรายละเอียด (คอลัมน์ F) และจัดการเรื่องการขึ้นบรรทัดใหม่
+                    let desc = cols[5] ? cols[5].replace(/"/g, '').trim() : "";
+                    desc = desc.replace(/\n/g, '<br>');
+
+                    const badgeClass = 'type-' + type.replace('กลุ่ม', '').trim();
+                    const displayImg = imgRaw ? imgRaw : 'https://via.placeholder.com/45/fff0f6/e889b5?text=MSB';
+                    
+                    html += `<tr>
+                        <td>
+                            <img src="${displayImg}" class="product-img" 
+                                 onclick="openModal('${displayImg}', '<b>${name}</b><br><br>${desc}')"
+                                 onerror="this.src='https://via.placeholder.com/45/fff0f6/e889b5?text=MSB'">
+                        </td>
+                        <td style="text-align:left; font-weight:500;">${name}</td>
+                        <td><span class="type-badge ${badgeClass}">${type}</span></td>
+                        <td class="price-old">${priceD}.-</td>
+                        <td class="price-admin">${priceE}.-</td>
+                    </tr>`;
+                }
+            }
+            // ใส่ข้อมูลลงในตาราง
+            const targetBody = document.getElementById('data-body') || document.getElementById('font-data-body');
+            if (targetBody) targetBody.innerHTML = html;
+
+        } catch (e) { 
+            console.error("Fetch Error: ", e);
+            const targetBody = document.getElementById('data-body') || document.getElementById('font-data-body');
+            if (targetBody) targetBody.innerHTML = '<tr><td colspan="5">❌ โหลดข้อมูลไม่สำเร็จ กรุณารีเฟรชหน้าจอ</td></tr>';
+        }
     }
-    .modal-content {
-        background: white; padding: 20px; border-radius: 25px; max-width: 90%; max-height: 90%; 
-        text-align: center; position: relative; animation: zoomIn 0.3s; overflow-y: auto;
+
+    // ฟังก์ชัน Modal (ขยายรูป)
+    function openModal(src, text) {
+        const modal = document.getElementById('myModal');
+        const imgBig = document.getElementById('imgBig');
+        const descBig = document.getElementById('descBig');
+        if (modal && imgBig) {
+            imgBig.src = src;
+            if (descBig) descBig.innerHTML = text;
+            modal.style.display = 'flex';
+        }
     }
-    @keyframes zoomIn { from {transform: scale(0.5); opacity: 0;} to {transform: scale(1); opacity: 1;} }
-    .modal-img { width: 100%; max-width: 320px; border-radius: 15px; margin-bottom: 15px; border: 2px solid var(--main); }
-    .modal-text { color: #444; font-size: 14px; font-weight: 400; line-height: 1.6; text-align: left; background: #fffcfd; padding: 15px; border-radius: 15px; border: 1px dashed var(--main); word-
+    function closeModal() {
+        const modal = document.getElementById('myModal');
+        if (modal) modal.style.display = 'none';
+    }
+
+    // เริ่มทำงาน
+    fetchData();
+
+    // --- ระบบเพลง ---
+    const audio = document.getElementById('bgMusic');
+    const musicIcon = document.getElementById('musicIcon');
+    function toggleMusic() {
+        if (!audio) return;
+        if (audio.paused) { 
+            audio.play(); 
+            if(musicIcon) musicIcon.innerText = "🎵"; 
+        } else { 
+            audio.pause(); 
+            if(musicIcon) musicIcon.innerText = "🔇"; 
+        }
+    }
+    document.body.addEventListener('click', () => { 
+        if(audio && audio.paused) { 
+            audio.play(); 
+            if(musicIcon) musicIcon.innerText = "🎵"; 
+        } 
+    }, { once: true });
+
+    // --- ระบบอิโมจิ ---
+    setInterval(() => {
+        const emoji = document.createElement('div');
+        emoji.className = 'emoji-fall';
+        emoji.innerText = ['🌷', '🐶', '⭐️', '🐋', '🩷'][Math.floor(Math.random() * 5)];
+        emoji.style.left = Math.random() * 100 + "vw";
+        const duration = Math.random() * 3 + 4;
+        emoji.style.animationDuration = duration + "s";
+        document.body.appendChild(emoji);
+        setTimeout(() => emoji.remove(), duration * 1000);
+    }, 600);
+</script>
