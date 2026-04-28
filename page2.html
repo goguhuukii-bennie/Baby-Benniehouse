@@ -6,54 +6,56 @@
 <title>ฟอนต์ในเครือ MSB - Baby Bennie</title>
 <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{ --bg:#FFF0F6; --main:#F6A5C9; --dark:#E889B5; --white:#FFFFFF; --blue:#B9E5F3; }
-body{ background:var(--bg); font-family:'Mitr',sans-serif; display:flex; justify-content:center; padding:20px; margin:0; }
-.container{ max-width:500px; width:100%; }
-.section{ background:var(--white); border-radius:25px; overflow:hidden; border:2px solid var(--main); box-shadow:0 8px 20px rgba(0,0,0,0.05); padding-bottom: 25px; }
-.header-img { width: 100%; display: block; border-bottom: 2px solid var(--main); }
-.title-bar { background: var(--blue); color: #333; text-align: center; padding: 10px; font-weight: 500; font-size: 18px; }
-table { width: 100%; border-collapse: collapse; }
-th { background-color: #f8f9fa; color: var(--dark); padding: 12px 8px; border-bottom: 2px solid #eee; font-size: 14px; }
-td { padding: 12px 8px; border-bottom: 1px solid #ffeef5; color: #555; text-align: center; font-size: 14px; }
-.type-badge { padding: 3px 10px; border-radius: 12px; font-size: 12px; color: white; display: inline-block; min-width: 85px;}
-
-/* สี Badge แยกตามคำที่พบในคอลัมน์ประเภท */
-.type-ลายมือ { background: #90D5FF; }
-.type-โปร่ง { background: #FFD25A; }
-.type-อิโมจิ { background: #FF90C2; }
-.type-ทั่วไป { background: #888; }
-
-.price { font-weight: bold; color: var(--dark); }
-.btn-back { display: block; text-align: center; padding: 12px; background: var(--main); color: white; text-decoration: none; border-radius: 25px; font-weight: 500; margin: 20px; }
-.loading-text { text-align: center; padding: 30px; color: var(--dark); font-size: 14px; }
+    :root{ --bg:#FFF0F6; --main:#F6A5C9; --dark:#E889B5; --white:#FFFFFF; --blue:#B9E5F3; }
+    body{ background:var(--bg); font-family:'Mitr',sans-serif; display:flex; justify-content:center; padding:20px; margin:0; }
+    .container{ max-width:500px; width:100%; }
+    .section{ background:var(--white); border-radius:25px; overflow:hidden; border:2px solid var(--main); box-shadow:0 8px 20px rgba(0,0,0,0.05); padding-bottom: 25px; }
+    .header-img { width: 100%; display: block; border-bottom: 2px solid var(--main); }
+    .title-bar { background: var(--blue); color: #333; text-align: center; padding: 10px; font-weight: 500; font-size: 18px; }
+    table { width: 100%; border-collapse: collapse; }
+    th { background-color: #f8f9fa; color: var(--dark); padding: 12px 8px; border-bottom: 2px solid #eee; font-size: 13px; }
+    td { padding: 10px 5px; border-bottom: 1px solid #ffeef5; color: #555; text-align: center; font-size: 13px; vertical-align: middle; }
+    
+    /* รูปภาพฟอนต์ */
+    .product-img { width: 45px; height: 45px; border-radius: 8px; object-fit: cover; border: 1px solid #eee; background: #fafafa; }
+    
+    .type-badge { padding: 3px 8px; border-radius: 12px; font-size: 11px; color: white; display: inline-block; min-width: 80px; }
+    
+    /* สี Badge แยกตามประเภทฟอนต์ */
+    .type-ลายมือ { background: #90D5FF; }
+    .type-โปร่ง { background: #FFD25A; }
+    .type-อิโมจิ { background: #FF90C2; }
+    .type-ทั่วไป { background: #bbb; }
+    
+    .price { font-weight: bold; color: var(--dark); }
+    .btn-back { display: block; text-align: center; padding: 12px; background: var(--main); color: white; text-decoration: none; border-radius: 25px; font-weight: 500; margin: 20px; }
+    .loading { text-align: center; padding: 30px; color: var(--dark); font-size: 14px; }
 </style>
 </head>
 <body>
 <div class="container">
     <div class="section">
-        <img src="12.png" alt="Header MSB" class="header-img">
-        
-        <div class="title-bar">รายการฟอนต์ (อัปเดตอัตโนมัติ)</div>
-        
+        <img src="12.png" alt="Header" class="header-img">
+        <div class="title-bar">รายการฟอนต์ในเครือ</div>
         <table>
             <thead>
                 <tr>
+                    <th>รูป</th>
                     <th>ชื่อฟอนต์</th>
                     <th>ประเภท</th>
                     <th>ราคา</th>
                 </tr>
             </thead>
             <tbody id="font-data-body">
-                <tr><td colspan="3" class="loading-text">🎀 กำลังดึงข้อมูลฟอนต์ล่าสุด...</td></tr>
+                <tr><td colspan="4" class="loading">🎀 กำลังดึงข้อมูลฟอนต์ล่าสุด...</td></tr>
             </tbody>
         </table>
-        
         <a href="main.html" class="btn-back">กลับหน้าหลัก 🎀</a>
     </div>
 </div>
 
 <script>
-    // ลิงก์ CSV สำหรับหน้าฟอนต์ที่คุณส่งมา
+    // ลิงก์ CSV สำหรับหน้าฟอนต์ (Tab ที่ 2)
     const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSac_ZH2_OR2X_sT9EnZLqXuzqO7IBxJo5qChEsuR1w8RsGCBDxb1jpVLf_n3p7hBORcagesRlm4wmx/pub?gid=1494052616&single=true&output=csv';
 
     async function fetchFontData() {
@@ -61,42 +63,42 @@ td { padding: 12px 8px; border-bottom: 1px solid #ffeef5; color: #555; text-alig
             const response = await fetch(sheetURL);
             const data = await response.text();
             const rows = data.split(/\r?\n/);
-            
             let html = '';
             
-            // เริ่มอ่านที่ i = 3 (แถวที่ 4 ใน Sheet)
-            for (let i = 3; i < rows.length; i++) {
+            // เริ่มอ่านตั้งแต่แถวที่ 2 (i=1)
+            for (let i = 1; i < rows.length; i++) {
                 const cols = rows[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
                 
-                if (cols.length >= 3 && cols[0].trim() !== "") {
-                    const fontName = cols[0].replace(/"/g, '').trim();
-                    const typeText = cols[1].replace(/"/g, '').trim();
-                    const price = cols[2].replace(/"/g, '').trim();
+                // เช็คว่ามีชื่อฟอนต์ (คอลัมน์ B) ถึงจะแสดงผล และข้ามบรรทัดหัวข้อถ้ามี
+                if (cols.length >= 4 && cols[1].trim() !== "" && cols[1].trim() !== "ชื่อฟอนต์") {
+                    const img = cols[0].replace(/"/g, '').trim();
+                    const name = cols[1].replace(/"/g, '').trim();
+                    const type = cols[2].replace(/"/g, '').trim();
+                    const price = cols[3].replace(/"/g, '').trim();
                     
-                    // ตรวจสอบคำเพื่อใส่สี Badge
+                    // เลือกสี Badge
                     let badgeClass = 'type-ทั่วไป';
-                    if(typeText.includes('ลายมือ')) badgeClass = 'type-ลายมือ';
-                    else if(typeText.includes('โปร่ง')) badgeClass = 'type-โปร่ง';
-                    else if(typeText.includes('อิโมจิ')) badgeClass = 'type-อิโมจิ';
+                    if(type.includes('ลายมือ')) badgeClass = 'type-ลายมือ';
+                    else if(type.includes('โปร่ง')) badgeClass = 'type-โปร่ง';
+                    else if(type.includes('อิโมจิ')) badgeClass = 'type-อิโมจิ';
+                    
+                    // จัดการรูปภาพ (ถ้าไม่มีให้ขึ้น No Img สีชมพู)
+                    const displayImg = img ? img : 'https://via.placeholder.com/50/fff0f6/e889b5?text=Font';
                     
                     html += `
                         <tr>
-                            <td>${fontName}</td>
-                            <td><span class="type-badge ${badgeClass}">${typeText}</span></td>
+                            <td><img src="${displayImg}" class="product-img" onerror="this.src='https://via.placeholder.com/50/fff0f6/e889b5?text=Font'"></td>
+                            <td style="text-align:left; padding-left:10px;">${name}</td>
+                            <td><span class="type-badge ${badgeClass}">${type}</span></td>
                             <td class="price">${price}.-</td>
-                        </tr>
-                    `;
+                        </tr>`;
                 }
             }
-            
-            document.getElementById('font-data-body').innerHTML = html || '<tr><td colspan="3" class="loading-text">ไม่พบข้อมูลฟอนต์ในแถวที่ 4 เป็นต้นไป</td></tr>';
-            
-        } catch (error) {
-            console.error('Error:', error);
-            document.getElementById('font-data-body').innerHTML = '<tr><td colspan="3" class="loading-text">❌ โหลดข้อมูลไม่สำเร็จ ตรวจสอบลิงก์หรืออินเทอร์เน็ต</td></tr>';
+            document.getElementById('font-data-body').innerHTML = html || '<tr><td colspan="4" class="loading">ไม่พบข้อมูลฟอนต์</td></tr>';
+        } catch (e) {
+            document.getElementById('font-data-body').innerHTML = '<tr><td colspan="4" class="loading">❌ โหลดไม่สำเร็จ</td></tr>';
         }
     }
-
     fetchFontData();
 </script>
 </body>
