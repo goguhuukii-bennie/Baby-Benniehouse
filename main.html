@@ -18,14 +18,15 @@ body{
 background:var(--bg);
 display:flex;
 justify-content:center;
-overflow-x: hidden; /* กันอิโมจิทำจอเลื่อน */
+overflow-x: hidden;
+position: relative;
 }
 .container{
 max-width:500px;
 width:100%;
 padding:20px 15px 40px;
 position: relative;
-z-index: 1; /* ให้เนื้อหาอยู่เหนืออิโมจิ */
+z-index: 1;
 }
 .section{
 background:var(--white);
@@ -137,14 +138,14 @@ border:1px solid #ffeef5;
 }
 .small{font-size:12px;opacity:.7;margin-top:10px;}
 
-/* --- ส่วนของอิโมจิลอยไปมา --- */
+/* --- อิโมจิลอย --- */
 .floating-emoji {
     position: fixed;
     bottom: -10%;
-    z-index: 0; /* อยู่หลัง Container */
+    z-index: 0;
     user-select: none;
     pointer-events: none;
-    opacity: 0.3; /* ความจาง */
+    opacity: 0.3;
     font-size: 24px;
     animation: floatUp linear infinite;
 }
@@ -154,9 +155,37 @@ border:1px solid #ffeef5;
     80% { opacity: 0.3; }
     100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
 }
+
+/* --- ปุ่มควบคุมเพลง --- */
+.music-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 45px;
+    height: 45px;
+    background: var(--white);
+    border: 2px solid var(--main);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 4px 12px var(--glow);
+    font-size: 20px;
+    transition: 0.3s;
+}
+.music-btn:hover { transform: scale(1.1); }
 </style>
 </head>
 <body>
+
+<audio id="bgMusic" loop preload="auto">
+    <source src="1.mp3" type="audio/mpeg">
+    <source src="https://www.chosic.com/wp-content/uploads/2021/04/Morning-Joy.mp3" type="audio/mpeg">
+</audio>
+
+<div class="music-btn" onclick="toggleMusic()" id="musicIcon">🔇</div>
 
 <div id="emoji-container"></div>
 
@@ -243,6 +272,7 @@ border:1px solid #ffeef5;
 </div>
 
 <script>
+    // --- ระบบ Emoji ---
     const emojis = ['🐶', '⭐️', '🌷', '🩷'];
     const container = document.getElementById('emoji-container');
 
@@ -258,6 +288,28 @@ border:1px solid #ffeef5;
         setTimeout(() => { emoji.remove(); }, duration * 1000);
     }
     setInterval(createEmoji, 1500);
+
+    // --- ระบบเพลง ---
+    const audio = document.getElementById('bgMusic');
+    const icon = document.getElementById('musicIcon');
+
+    function toggleMusic() {
+        if (audio.paused) {
+            audio.play();
+            icon.innerText = "🎵";
+        } else {
+            audio.pause();
+            icon.innerText = "🔇";
+        }
+    }
+
+    // คลิกหน้าจอครั้งแรกเพื่อให้เพลงเริ่ม (กฎ Browser)
+    document.body.addEventListener('click', () => {
+        if (audio.paused) {
+            audio.play();
+            icon.innerText = "🎵";
+        }
+    }, { once: true });
 </script>
 
 </body>
