@@ -12,6 +12,7 @@
 --dark:#E889B5;
 --white:#FFFFFF;
 --glow:rgba(246,165,201,0.4);
+--line:#06C755;
 }
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Mitr',sans-serif;}
 body{
@@ -46,23 +47,6 @@ margin:0 auto 20px;
 box-shadow:0 6px 20px var(--glow);
 }
 .logo img{width:100%;height:100%;object-fit:cover;}
-.badges{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
-gap:10px;
-margin-bottom:20px;
-}
-.badge{
-background:#fff;
-padding:8px 16px;
-border-radius:25px;
-box-shadow:0 4px 10px var(--glow);
-font-size:13px;
-color:var(--dark);
-text-decoration:none;
-display: inline-block;
-}
 .btn{
 display:block;
 text-align:center;
@@ -71,6 +55,10 @@ border-radius:25px;
 text-decoration:none;
 margin-top:15px;
 font-weight:500;
+cursor: pointer;
+border: none;
+width: 100%;
+font-family: 'Mitr', sans-serif;
 }
 .btn-outline{
 background:#fff;
@@ -80,6 +68,29 @@ color:var(--dark);
 .btn-main{
 background:var(--main);
 color:#fff;
+}
+.btn-agent{
+background:#fff;
+border:2px solid var(--line);
+color:var(--line);
+margin-top:10px;
+}
+.btn-copy{
+    width: 100%;
+    background: #FFF0F6;
+    color: var(--dark);
+    border: 1px solid var(--main);
+    padding: 10px;
+    border-radius: 15px;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: 'Mitr';
+    margin-top: 8px;
+    transition: 0.3s;
+}
+.btn-copy:active{
+    background: var(--main);
+    color: #fff;
 }
 .step{
 display:flex;
@@ -173,12 +184,39 @@ border:1px solid #ffeef5;
     z-index: 1000;
     box-shadow: 0 4px 12px var(--glow);
     font-size: 20px;
-    transition: 0.3s;
 }
-.music-btn:hover { transform: scale(1.1); }
+
+/* --- แจ้งเตือนคัดลอก --- */
+#toast {
+    visibility: hidden;
+    min-width: 250px;
+    background-color: var(--dark);
+    color: #fff;
+    text-align: center;
+    border-radius: 20px;
+    padding: 12px;
+    position: fixed;
+    z-index: 2000;
+    left: 50%;
+    bottom: 80px;
+    transform: translateX(-50%);
+    font-size: 14px;
+}
+#toast.show {
+    visibility: visible;
+    animation: fadeInOut 2s;
+}
+@keyframes fadeInOut {
+    0% { opacity: 0; bottom: 60px; }
+    20% { opacity: 1; bottom: 80px; }
+    80% { opacity: 1; bottom: 80px; }
+    100% { opacity: 0; bottom: 60px; }
+}
 </style>
 </head>
 <body>
+
+<div id="toast">คัดลอกแล้วค่ะ 🌷</div>
 
 <audio id="bgMusic" loop preload="auto">
     <source src="1.mp3" type="audio/mpeg">
@@ -186,7 +224,6 @@ border:1px solid #ffeef5;
 </audio>
 
 <div class="music-btn" onclick="toggleMusic()" id="musicIcon">🔇</div>
-
 <div id="emoji-container"></div>
 
 <div class="container">
@@ -202,7 +239,6 @@ border:1px solid #ffeef5;
 <div class="badges">
 <a href="page1.html" class="badge">🎨 กลุ่มในเครือ MSB</a>
 <a href="page2.html" class="badge">✍️ ฟอนต์ในเครือ MSB</a>
-<div class="badge">🧸 สินค้าอื่นๆ</div>
 </div>
 <a href="https://drive.google.com/drive/folders/1RJzgn-LtlDH4372Vu3r7Z1_RRiZq69zZ" class="btn btn-outline" target="_blank">
 ตัวอย่างงาน คลิ๊ก ✨
@@ -216,66 +252,70 @@ border:1px solid #ffeef5;
 <div class="step"><div class="step-num">3</div><div>ชำระค่าสินค้าตามยอด</div></div>
 <div class="step"><div class="step-num">4</div><div>แจ้ง ID Line หรือ Email</div></div>
 <div class="step"><div class="step-num">5</div><div>ยืนยันยอดและรับสินค้า</div></div>
-<a href="https://lin.ee/YxqG5K7" class="btn btn-main">สั่งซื้อสินค้าที่นี่</a>
-</div>
-
-<div class="section">
-<h2>💰 เลือกชมสินค้า</h2>
-<a href="page1.html" class="price-row">
-    <span>กลุ่มต่างๆ ในเครือ MSB</span>
-    <span class="price-tag">ดูรายการ</span>
-</a>
-<a href="page2.html" class="price-row">
-    <span>ฟอนต์ต่างๆ ในเครือ MSB</span>
-    <span class="price-tag">ดูรายการ</span>
-</a>
-<div class="price-row">
-    <span>สินค้าอื่นๆ</span>
-    <span class="price-tag">สอบถาม</span>
-</div>
-<a href="https://lin.ee/YxqG5K7" class="btn btn-main">สอบถามแอดมิน</a>
+<a href="https://line.me/ti/p/GKW1TDYvpB" class="btn btn-main">สั่งซื้อสินค้าที่นี่</a>
+<a href="https://line.me/ti/g/ymm_1L5V4k" class="btn btn-agent">🏠 เข้ากลุ่มแจ้งออเดอร์ (ตัวแทน)</a>
 </div>
 
 <div class="section center">
     <h2 style="margin-bottom: 15px;">💳 ช่องทางการชำระเงิน</h2>
     <div style="margin-bottom: 15px; display: flex; justify-content: center;">
-        <img src="babu.png" alt="บัญชีธนาคาร" style="width: 100%; max-width: 300px; border-radius: 15px; border: 1px solid #ffeef5; display: block;">
+        <img src="babu.png" alt="บัญชีธนาคาร" style="width: 100%; max-width: 300px; border-radius: 15px; border: 1px solid #ffeef5;">
     </div>
-    <div style="padding: 15px; border-radius: 15px; background: #fff5f8; border: 1px dashed var(--main);">
-        <p style="color: #d63384; font-weight: 500; font-size: 14px; margin-bottom: 8px;">
-            “โปรดส่งสลิปให้แอดมินในแชทด้วยนะคะ กันตกหล่นน้า”
-        </p>
-        <p style="color: #ff4d4d; font-weight: bold; font-size: 15px;">
-            ⚠️ หากไม่ทราบยอดแน่ชัด รบกวนทักแอดมินก่อนโอน !
-        </p>
+    
+    <div style="background: #fff; padding: 15px; border-radius: 15px; border: 1px solid #ffeef5; margin-bottom: 15px;">
+        <p style="color: var(--dark); font-size: 14px; margin-bottom: 5px;">ชื่อบัญชี: <b>ปริญญาศิริ ดิษรพงษ์</b></p>
+        <hr style="border: none; border-top: 1px solid #fdf0f5; margin: 10px 0;">
+        
+        <div style="margin-bottom: 15px;">
+            <p style="color: #00A950; font-weight: 500; font-size: 14px;">ธนาคารกสิกรไทย</p>
+            <p style="font-weight: bold; color: #333; font-size: 19px;">166-3-17142-5</p>
+            <button onclick="copyBtn('1663171425', 'คัดลอกเลขบัญชีแล้วค่ะ 🌷')" class="btn-copy">ก๊อปเลขบัญชี ✨</button>
+        </div>
+        
+        <div>
+            <p style="color: #FF8200; font-weight: 500; font-size: 14px;">TrueMoney Wallet</p>
+            <p style="font-weight: bold; color: #333; font-size: 19px;">098-532-3732</p>
+            <p style="font-size: 11px; color: #ff4d4d; margin-top: 2px;">(โอนวอลเล็ต +ค่าธรรมเนียม 1฿)</p>
+            <button onclick="copyBtn('0985323732', 'คัดลอกเบอร์วอลเล็ตแล้วค่ะ 🌷')" class="btn-copy">ก๊อปเบอร์วอลเล็ต 📱</button>
+        </div>
     </div>
 
-<div class="footer">
-<p class="small" style="margin-bottom:15px; color:var(--dark);">📍 โอนเงินแล้วไม่คืนเงินทุกกรณี / เปลี่ยนช่องทางรับสินค้าก่อนร้านส่งงานเสร็จ</p>
-
-<div style="margin-bottom: 15px;">
-    <img src="https://qr-official.line.me/gs/M_557rzzok_BW.png?oat_content=qr" alt="Line QR Updated" style="width: 120px; border-radius: 15px; box-shadow: 0 4px 10px var(--glow);">
+    <div style="padding: 10px; border-radius: 15px; background: #fff5f8; border: 1px dashed var(--main);">
+        <p style="color: #d63384; font-weight: 500; font-size: 13px;">“โอนแล้วรบกวนส่งสลิปในแชทด้วยน้า”</p>
+    </div>
 </div>
 
-<a href="https://lin.ee/YxqG5K7" class="btn btn-main">สแกนหรือคลิกติดต่อ 🎀</a>
-
+<div class="footer center">
+<div style="margin-bottom: 15px;">
+    <img src="qr-new.png" alt="Line QR" style="width: 120px; border-radius: 15px; box-shadow: 0 4px 10px var(--glow);">
+</div>
+<a href="https://line.me/ti/p/GKW1TDYvpB" class="btn btn-main">สแกนหรือคลิกติดต่อ 🎀</a>
 <div class="socials">
 <a href="https://www.facebook.com/share/18dQmfZcfC/?mibextid=wwXIfr" target="_blank">Facebook</a>
-<a href="https://lin.ee/YxqG5K7" target="_blank">LINE</a>
+<a href="https://line.me/ti/p/GKW1TDYvpB" target="_blank">LINE</a>
 <a href="https://drive.google.com/drive/folders/1RJzgn-LtlDH4372Vu3r7Z1_RRiZq69zZ" target="_blank">Drive</a>
 </div>
-<p class="small">
-© 2026 Baby Bennie
-</p>
+<p class="small">© 2026 Baby Bennie</p>
 </div>
 
 </div>
 
 <script>
-    // --- ระบบ Emoji ---
+    function copyBtn(text, msg) {
+        const el = document.createElement('textarea');
+        el.value = text;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        const toast = document.getElementById("toast");
+        toast.innerText = msg;
+        toast.className = "show";
+        setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 2000);
+    }
+
     const emojis = ['🐶', '⭐️', '🌷', '🩷'];
     const container = document.getElementById('emoji-container');
-
     function createEmoji() {
         const emoji = document.createElement('div');
         emoji.className = 'floating-emoji';
@@ -289,28 +329,15 @@ border:1px solid #ffeef5;
     }
     setInterval(createEmoji, 1500);
 
-    // --- ระบบเพลง ---
     const audio = document.getElementById('bgMusic');
     const icon = document.getElementById('musicIcon');
-
     function toggleMusic() {
-        if (audio.paused) {
-            audio.play();
-            icon.innerText = "🎵";
-        } else {
-            audio.pause();
-            icon.innerText = "🔇";
-        }
+        if (audio.paused) { audio.play(); icon.innerText = "🎵"; } 
+        else { audio.pause(); icon.innerText = "🔇"; }
     }
-
-    // คลิกหน้าจอครั้งแรกเพื่อให้เพลงเริ่ม (กฎ Browser)
     document.body.addEventListener('click', () => {
-        if (audio.paused) {
-            audio.play();
-            icon.innerText = "🎵";
-        }
+        if (audio.paused) { audio.play(); icon.innerText = "🎵"; }
     }, { once: true });
 </script>
-
 </body>
 </html>
