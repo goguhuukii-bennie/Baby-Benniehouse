@@ -38,7 +38,7 @@
 
         /* --- Login Box --- */
         .login-box {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.9);
             padding: 40px 30px;
             border-radius: 30px;
             box-shadow: 0 10px 25px rgba(246, 165, 201, 0.3);
@@ -60,8 +60,9 @@
             justify-content: center;
             font-size: 35px;
         }
-        h2 { color: var(--dark); margin-bottom: 10px; }
+        h2 { color: var(--dark); margin-bottom: 5px; }
         p { color: #888; font-size: 14px; margin-bottom: 25px; }
+        
         input {
             width: 100%;
             padding: 15px;
@@ -86,6 +87,7 @@
             transition: 0.3s;
         }
         button:hover { background-color: var(--dark); }
+        
         .error-msg {
             color: #ff6b6b;
             font-size: 13px;
@@ -106,12 +108,15 @@
             font-size: 20px;
             border: 2px solid var(--main);
             z-index: 100;
+            transition: 0.3s;
         }
     </style>
 </head>
 <body>
 
-<div id="player"></div>
+<audio id="bgMusic" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" type="audio/mpeg">
+</audio>
 
 <div class="login-box">
     <div class="logo-area">🎀</div>
@@ -122,7 +127,7 @@
     <div id="error" class="error-msg">❌ รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่</div>
 </div>
 
-<div class="music-control" onclick="toggleMusic()" id="musicBtn">🔇</div>
+<div class="music-control" onclick="toggleMusic()" id="musicBtn">🔈</div>
 
 <script>
     // 1. ระบบ Emoji Rain
@@ -142,49 +147,27 @@
     }
     setInterval(createEmoji, 400);
 
-    // 2. ระบบ YouTube API (ปรับให้ชัวร์ขึ้น)
-    var tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-    var player;
-    function onYouTubeIframeAPIReady() {
-        player = new YT.Player('player', {
-            height: '0',
-            width: '0',
-            videoId: 'mS_6F78qGTo', // เพลง Morning Joy - BGM President (น่ารักๆ)
-            playerVars: {
-                'autoplay': 0,
-                'loop': 1,
-                'playlist': 'mS_6F78qGTo'
-            },
-            events: {
-                'onReady': onPlayerReady
-            }
-        });
-    }
-
-    function onPlayerReady(event) {
-        // เมื่อพร้อมแล้ว ให้รอการคลิกจากผู้ใช้เพื่อเริ่มเพลง
-        document.body.addEventListener('click', function() {
-            if (player.getPlayerState() !== 1) { // ถ้ายังไม่เล่น
-                player.playVideo();
-                document.getElementById('musicBtn').innerText = "🎵";
-            }
-        }, { once: true });
-    }
+    // 2. ระบบจัดการเสียง
+    const audio = document.getElementById('bgMusic');
+    const musicBtn = document.getElementById('musicBtn');
 
     function toggleMusic() {
-        const state = player.getPlayerState();
-        if (state === 1) {
-            player.pauseVideo();
-            document.getElementById('musicBtn').innerText = "🔇";
+        if (audio.paused) {
+            audio.play();
+            musicBtn.innerText = "🔊";
         } else {
-            player.playVideo();
-            document.getElementById('musicBtn').innerText = "🎵";
+            audio.pause();
+            musicBtn.innerText = "🔈";
         }
     }
+
+    // คลิกครั้งแรกที่หน้าจอเพื่อให้เพลงเริ่ม (กฎความปลอดภัยเบราว์เซอร์)
+    document.body.addEventListener('click', function() {
+        if (audio.paused) {
+            audio.play();
+            musicBtn.innerText = "🔊";
+        }
+    }, { once: true });
 
     // 3. ระบบรหัสผ่าน
     function validate() {
