@@ -19,9 +19,26 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            overflow: hidden;
+            position: relative;
         }
+
+        /* --- Emoji Rain Style --- */
+        .emoji-fall {
+            position: fixed;
+            top: -50px;
+            z-index: -1;
+            user-select: none;
+            pointer-events: none;
+            animation: fall linear forwards;
+        }
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
+
+        /* --- Login Box Style --- */
         .login-box {
-            background: white;
+            background: rgba(255, 255, 255, 0.85);
             padding: 40px 30px;
             border-radius: 30px;
             box-shadow: 0 10px 25px rgba(246, 165, 201, 0.3);
@@ -29,6 +46,8 @@
             text-align: center;
             width: 90%;
             max-width: 380px;
+            backdrop-filter: blur(8px);
+            z-index: 10;
         }
         .logo-area {
             width: 80px;
@@ -39,10 +58,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 30px;
+            font-size: 35px;
+            cursor: pointer;
+            transition: 0.3s;
+            animation: bounce 2s infinite;
         }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
         h2 { color: var(--dark); margin-bottom: 10px; }
         p { color: #888; font-size: 14px; margin-bottom: 25px; }
+        
         input {
             width: 100%;
             padding: 15px;
@@ -53,8 +81,10 @@
             text-align: center;
             font-size: 16px;
             box-sizing: border-box;
+            transition: 0.3s;
         }
-        input:focus { border-color: var(--main); box-shadow: 0 0 8px rgba(246, 165, 201, 0.2); }
+        input:focus { border-color: var(--main); box-shadow: 0 0 10px rgba(246, 165, 201, 0.2); }
+        
         button {
             width: 100%;
             padding: 15px;
@@ -68,54 +98,142 @@
             transition: 0.3s;
         }
         button:hover { background-color: var(--dark); transform: translateY(-2px); }
+        
         .error-msg {
             color: #ff6b6b;
             font-size: 13px;
             margin-top: 15px;
             display: none;
         }
+
+        /* --- Music Control Button --- */
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 12px;
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(246, 165, 201, 0.4);
+            cursor: pointer;
+            font-size: 20px;
+            border: 2px solid var(--main);
+            z-index: 100;
+            line-height: 1;
+            transition: 0.3s;
+        }
+        .music-control:hover { transform: scale(1.1); }
     </style>
 </head>
 <body>
+
+<div id="youtube-player" style="position: absolute; width: 0; height: 0; visibility: hidden;"></div>
 
 <div class="login-box">
     <div class="logo-area">🎀</div>
     <h2>Baby Bennie</h2>
     <p>กรุณากรอกรหัสผ่านเพื่อเข้าชมร้านค้า</p>
     
-    <input type="password" id="passInput" placeholder="รหัสผ่าน">
+    <input type="password" id="passInput" placeholder="รหัสผ่าน" autofocus>
     
     <button onclick="validate()">เข้าสู่หน้าเว็บ</button>
     
     <div id="error" class="error-msg">❌ รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่</div>
 </div>
 
+<div class="music-control" onclick="toggleMusic()" id="musicBtn">🎵</div>
+
 <script>
+    // --- 1. ระบบ Emoji Rain ---
+    const emojis = ['🌷', '🐶', '⭐️', '🐋'];
+    function createEmoji() {
+        const emoji = document.createElement('div');
+        emoji.className = 'emoji-fall';
+        emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        emoji.style.left = Math.random() * 100 + "vw";
+        const size = Math.random() * (30 - 18) + 18;
+        emoji.style.fontSize = size + "px";
+        const duration = Math.random() * (8 - 4) + 4;
+        emoji.style.animationDuration = duration + "s";
+        emoji.style.opacity = Math.random() * (0.8 - 0.5) + 0.5;
+        document.body.appendChild(emoji);
+        setTimeout(() => { emoji.remove(); }, duration * 1000);
+    }
+    setInterval(createEmoji, 400);
+
+    // --- 2. ระบบเพลงจาก YouTube (BGM President) ---
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var player;
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('youtube-player', {
+            height: '0',
+            width: '0',
+            videoId: '3v_G8O_lT9Y', // รหัสวิดีโอจากช่อง BGM President (เพลง Cooking)
+            playerVars: {
+                'autoplay': 0,
+                'loop': 1,
+                'playlist': '3v_G8O_lT9Y' // จำเป็นสำหรับการ Loop
+            },
+            events: {
+                'onReady': onPlayerReady
+            }
+        });
+    }
+
+    function onPlayerReady(event) {
+        // ให้เพลงเริ่มเล่นเมื่อผู้ใช้คลิกหน้าจอครั้งแรก (เพราะ Browser บล็อก Auto-play)
+        document.body.addEventListener('click', function() {
+            player.playVideo();
+        }, { once: true });
+    }
+
+    function toggleMusic() {
+        const state = player.getPlayerState();
+        if (state === 1) { // 1 = กำลังเล่น
+            player.pauseVideo();
+            document.getElementById('musicBtn').innerText = "🔇";
+        } else {
+            player.playVideo();
+            document.getElementById('musicBtn').innerText = "🎵";
+        }
+    }
+
+    // --- 3. ระบบตรวจสอบรหัสผ่าน ---
     function validate() {
         const input = document.getElementById('passInput').value;
         const error = document.getElementById('error');
-        
-        // --- ส่วนที่แก้ไขได้ ---
-        const correctPassword = "BENNIE123"; // แก้ไขรหัสผ่านที่ต้องการตรงนี้
-        const targetPage = "main.html";      // ชื่อไฟล์หน้าที่เราต้องการให้ไป
-        // -----------------------
+        const correctPassword = "BENNIE123"; // แก้ไขรหัสผ่านตรงนี้
+        const targetPage = "main.html";      // ชื่อหน้าที่จะไป
 
         if (input === correctPassword) {
             window.location.href = targetPage;
         } else {
             error.style.display = 'block';
             document.getElementById('passInput').value = "";
+            // เพิ่มเอฟเฟกต์สั่นตอนใส่ผิด
+            const box = document.querySelector('.login-box');
+            box.style.animation = "none";
+            setTimeout(() => box.style.animation = "shake 0.3s", 10);
         }
     }
 
-    // ฟังก์ชันให้กด Enter แล้วเข้าได้เลย
     document.getElementById('passInput').addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') {
-            validate();
-        }
+        if (e.key === 'Enter') validate();
     });
 </script>
 
+<style>
+    /* เอฟเฟกต์สั่นเมื่อรหัสผิด */
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-10px); }
+        75% { transform: translateX(10px); }
+    }
+</style>
+
 </body>
 </html>
-
