@@ -6,25 +6,29 @@
 <title>กลุ่มในเครือ MSB - Baby Bennie</title>
 <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{ --bg:#FFF0F6; --main:#F6A5C9; --dark:#E889B5; --white:#FFFFFF; --purple:#E2D1F9; }
-body{ background:var(--bg); font-family:'Mitr',sans-serif; display:flex; justify-content:center; padding:20px; margin:0; }
-.container{ max-width:500px; width:100%; }
-.section{ background:var(--white); border-radius:25px; overflow:hidden; border:2px solid var(--main); box-shadow:0 8px 20px rgba(0,0,0,0.05); padding-bottom: 25px; }
-.header-img { width: 100%; display: block; border-bottom: 2px solid var(--main); }
-.title-bar { background: var(--purple); color: #333; text-align: center; padding: 10px; font-weight: 500; font-size: 18px; }
-table { width: 100%; border-collapse: collapse; }
-th { background-color: #f8f9fa; color: var(--dark); padding: 12px 8px; border-bottom: 2px solid #eee; font-size: 14px; }
-td { padding: 12px 8px; border-bottom: 1px solid #ffeef5; color: #555; text-align: center; font-size: 14px; }
-.type-badge { padding: 3px 10px; border-radius: 12px; font-size: 12px; color: white; display: inline-block; min-width: 80px; }
-/* สี Badge ตามประเภทกลุ่ม */
-.type-part { background: #FFD25A; } /* กลุ่มชิ้นส่วน */
-.type-block { background: #8CD4B0; } /* กลุ่มบล็อก */
-.type-effect { background: #B298E1; } /* กลุ่มเอฟเฟค */
-.type-line { background: #FF90C2; } /* กลุ่มลายเส้น */
-.type-font { background: #E15A7A; } /* กลุ่มฟอนต์ */
-.type-toon { background: #F2A25C; } /* กลุ่มตูน */
-.price { font-weight: bold; color: var(--dark); }
-.btn-back { display: block; text-align: center; padding: 12px; background: var(--main); color: white; text-decoration: none; border-radius: 25px; font-weight: 500; margin: 20px; }
+    :root{ --bg:#FFF0F6; --main:#F6A5C9; --dark:#E889B5; --white:#FFFFFF; --purple:#E2D1F9; }
+    body{ background:var(--bg); font-family:'Mitr',sans-serif; display:flex; justify-content:center; padding:20px; margin:0; }
+    .container{ max-width:500px; width:100%; }
+    .section{ background:var(--white); border-radius:25px; overflow:hidden; border:2px solid var(--main); box-shadow:0 8px 20px rgba(0,0,0,0.05); padding-bottom: 25px; }
+    .header-img { width: 100%; display: block; border-bottom: 2px solid var(--main); }
+    .title-bar { background: var(--purple); color: #333; text-align: center; padding: 10px; font-weight: 500; font-size: 18px; }
+    table { width: 100%; border-collapse: collapse; }
+    th { background-color: #f8f9fa; color: var(--dark); padding: 12px 8px; border-bottom: 2px solid #eee; font-size: 14px; }
+    td { padding: 12px 8px; border-bottom: 1px solid #ffeef5; color: #555; text-align: center; font-size: 14px; }
+    .type-badge { padding: 3px 10px; border-radius: 12px; font-size: 12px; color: white; display: inline-block; min-width: 80px; }
+    
+    /* สี Badge ตามประเภทกลุ่ม */
+    .type-ชิ้นส่วน { background: #FFD25A; }
+    .type-บล็อก { background: #8CD4B0; }
+    .type-เอฟเฟค { background: #B298E1; }
+    .type-ลายเส้น { background: #FF90C2; }
+    .type-ฟอนต์ { background: #E15A7A; }
+    .type-ตูน { background: #F2A25C; }
+    .type-ทั่วไป { background: #888; }
+
+    .price { font-weight: bold; color: var(--dark); }
+    .btn-back { display: block; text-align: center; padding: 12px; background: var(--main); color: white; text-decoration: none; border-radius: 25px; font-weight: 500; margin: 20px; }
+    .loading-text { text-align: center; padding: 30px; color: var(--dark); font-size: 14px; }
 </style>
 </head>
 <body>
@@ -32,9 +36,9 @@ td { padding: 12px 8px; border-bottom: 1px solid #ffeef5; color: #555; text-alig
     <div class="section">
         <img src="12.png" alt="Header MSB Groups" class="header-img">
         
-        <div class="title-bar">รายการกลุ่มในเครือ</div>
+        <div class="title-bar">รายการกลุ่มในเครือ (อัปเดตจาก Google Sheets)</div>
         
-        <table>
+        <table id="product-table">
             <thead>
                 <tr>
                     <th>ชื่อกลุ่ม</th>
@@ -42,37 +46,66 @@ td { padding: 12px 8px; border-bottom: 1px solid #ffeef5; color: #555; text-alig
                     <th>ค่าเข้า</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr><td>benny parts</td><td><span class="type-badge type-part">กลุ่มชิ้นส่วน</span></td><td class="price">69.-</td></tr>
-                <tr><td>lunar parts</td><td><span class="type-badge type-part">กลุ่มชิ้นส่วน</span></td><td class="price">39.-</td></tr>
-                <tr><td>ketchie parts</td><td><span class="type-badge type-part">กลุ่มชิ้นส่วน</span></td><td class="price">39.-</td></tr>
-                <tr><td>Smart parts</td><td><span class="type-badge type-part">กลุ่มชิ้นส่วน</span></td><td class="price">59.-</td></tr>
-                <tr><td>sticky parts</td><td><span class="type-badge type-part">กลุ่มชิ้นส่วน</span></td><td class="price">59.-</td></tr>
-                <tr><td>melody block</td><td><span class="type-badge type-part">กลุ่มชิ้นส่วน</span></td><td class="price">59.-</td></tr>
-                <tr><td>Box Yaiaom</td><td><span class="type-badge type-block">กลุ่มบล็อก</span></td><td class="price">79.-</td></tr>
-                <tr><td>Baby piglet</td><td><span class="type-badge type-block">กลุ่มบล็อก</span></td><td class="price">39.-</td></tr>
-                <tr><td>Rubyjally block</td><td><span class="type-badge type-block">กลุ่มบล็อก</span></td><td class="price">39.-</td></tr>
-                <tr><td>Miji Rainy</td><td><span class="type-badge type-block">กลุ่มบล็อก</span></td><td class="price">59.-</td></tr>
-                <tr><td>mochibear block</td><td><span class="type-badge type-block">กลุ่มบล็อก</span></td><td class="price">39.-</td></tr>
-                <tr><td>Fairy charmer</td><td><span class="type-badge type-block">กลุ่มบล็อก</span></td><td class="price">39.-</td></tr>
-                <tr><td>คุกกี้เรนนี่</td><td><span class="type-badge type-block">กลุ่มบล็อก</span></td><td class="price">39.-</td></tr>
-                <tr><td>Baby บ็อกบ็อก</td><td><span class="type-badge type-block">กลุ่มบล็อก</span></td><td class="price">39.-</td></tr>
-                <tr><td>บล็อกกรุบกรอบ</td><td><span class="type-badge type-block">กลุ่มบล็อก</span></td><td class="price">39.-</td></tr>
-                <tr><td>Gingery effect</td><td><span class="type-badge type-effect">กลุ่มเอฟเฟค</span></td><td class="price">39.-</td></tr>
-                <tr><td>candy mello</td><td><span class="type-badge type-line">กลุ่มลายเส้น</span></td><td class="price">49.-</td></tr>
-                <tr><td>Peachiineko</td><td><span class="type-badge type-line">กลุ่มลายเส้น</span></td><td class="price">19.-</td></tr>
-                <tr><td>pinky pompom</td><td><span class="type-badge type-line">กลุ่มลายเส้น</span></td><td class="price">29.-</td></tr>
-                <tr><td>sammy sumsum</td><td><span class="type-badge type-line">กลุ่มลายเส้น</span></td><td class="price">19.-</td></tr>
-                <tr><td>my little penut</td><td><span class="type-badge type-line">กลุ่มลายเส้น</span></td><td class="price">29.-</td></tr>
-                <tr><td>Puppip font</td><td><span class="type-badge type-font">กลุ่มฟอนต์</span></td><td class="price">69.-</td></tr>
-                <tr><td>Dorliytel</td><td><span class="type-badge type-toon">กลุ่มตูน</span></td><td class="price">119.-</td></tr>
-                <tr><td>zebell box v.1</td><td><span class="type-badge type-block">กลุ่มบล็อก</span></td><td class="price">99.-</td></tr>
-                <tr><td>zebell box v.2</td><td><span class="type-badge type-block">กลุ่มบล็อก</span></td><td class="price">69.-</td></tr>
+            <tbody id="data-body">
+                <tr><td colspan="3" class="loading-text">🎀 กำลังดึงข้อมูลล่าสุด...</td></tr>
             </tbody>
         </table>
         
         <a href="main.html" class="btn-back">กลับหน้าหลัก 🎀</a>
     </div>
 </div>
+
+<script>
+    // ลิงก์ CSV ที่คุณส่งมา
+    const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSac_ZH2_OR2X_sT9EnZLqXuzqO7IBxJo5qChEsuR1w8RsGCBDxb1jpVLf_n3p7hBORcagesRlm4wmx/pub?gid=515002157&single=true&output=csv';
+
+    async function fetchData() {
+        try {
+            const response = await fetch(sheetURL);
+            const data = await response.text();
+            
+            // แยกข้อมูลทีละบรรทัด
+            const rows = data.split('\n');
+            
+            let html = '';
+            // เริ่มอ่านที่แถวที่ 4 (Index 3) ตามโครงสร้างตารางในรูปของคุณ
+            for (let i = 3; i < rows.length; i++) {
+                // แยกคอมม่าแบบละเอียด
+                const cols = rows[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                
+                if (cols.length >= 3 && cols[0].trim() !== "") {
+                    const name = cols[0].replace(/"/g, '').trim();  // ชื่อกลุ่ม
+                    const typeText = cols[1].replace(/"/g, '').trim(); // ประเภทเต็มๆ เช่น "กลุ่มชิ้นส่วน"
+                    const price = cols[2].replace(/"/g, '').trim(); // ราคา
+                    
+                    // สกัดคำว่า "กลุ่ม" ออกเพื่อเอามาใช้เลือกสี CSS
+                    let cleanType = typeText.replace('กลุ่ม', '');
+                    const badgeClass = `type-${cleanType}`;
+                    
+                    html += `
+                        <tr>
+                            <td>${name}</td>
+                            <td><span class="type-badge ${badgeClass}">${typeText}</span></td>
+                            <td class="price">${price}.-</td>
+                        </tr>
+                    `;
+                }
+            }
+            
+            if(html === '') {
+                document.getElementById('data-body').innerHTML = '<tr><td colspan="3" class="loading-text">ไม่พบข้อมูลในตาราง</td></tr>';
+            } else {
+                document.getElementById('data-body').innerHTML = html;
+            }
+            
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            document.getElementById('data-body').innerHTML = '<tr><td colspan="3" class="loading-text">❌ โหลดข้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง</td></tr>';
+        }
+    }
+
+    // เรียกทำงานทันทีที่เปิดหน้า
+    fetchData();
+</script>
 </body>
 </html>
