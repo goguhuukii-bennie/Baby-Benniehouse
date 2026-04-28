@@ -22,16 +22,11 @@
     .price-admin { font-weight: bold; color: #E15A7A; font-size: 13px; }
     .btn-back { display: block; text-align: center; padding: 12px; background: var(--main); color: white; text-decoration: none; border-radius: 25px; font-weight: 500; margin: 20px; }
 
-    /* --- Modal ปรับปรุงใหม่เพื่อตัวแทน --- */
     .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); justify-content: center; align-items: center; padding: 15px; }
     .modal-content { background: white; padding: 20px; border-radius: 25px; width: 100%; max-width: 350px; text-align: center; position: relative; max-height: 85vh; overflow-y: auto; }
     .modal-img { width: 160px; height: 160px; object-fit: cover; border-radius: 15px; border: 2px solid var(--main); margin-bottom: 15px; }
     .modal-text { color: #555; font-size: 13px; text-align: left; white-space: pre-wrap; padding: 12px; background: #fff9fb; border-radius: 15px; border: 1px solid #ffe1ef; line-height: 1.5; margin-bottom: 15px; }
-    
-    /* ปุ่มก๊อปปี้ */
     .copy-btn { background: var(--main); color: white; border: none; padding: 10px 20px; border-radius: 15px; cursor: pointer; font-family: 'Mitr', sans-serif; font-size: 14px; width: 100%; transition: 0.3s; }
-    .copy-btn:active { transform: scale(0.95); background: var(--dark); }
-
     .close-btn { position: absolute; top: 10px; right: 10px; color: #bbb; font-size: 20px; cursor: pointer; }
     .emoji-fall { position: fixed; top: -50px; z-index: 0; pointer-events: none; animation: fall linear forwards; }
     @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
@@ -80,7 +75,7 @@
             const res = await fetch(sheetURL);
             const csvText = await res.text();
             
-            // ฟังก์ชันแยกคอลัมน์แบบพิเศษ (รองรับคอมม่าภายในข้อความ)
+            // ฟังก์ชันดึงข้อมูลแบบฉลาด (กันคอมม่าในช่อง F)
             function parseCSVRow(row) {
                 const result = [];
                 let start = 0;
@@ -101,8 +96,6 @@
             
             for (let i = 1; i < rows.length; i++) {
                 if (!rows[i].trim()) continue;
-                
-                // ใช้ฟังก์ชันใหม่แยกคอลัมน์
                 const cols = parseCSVRow(rows[i]);
                 
                 if (cols.length >= 2 && cols[1] !== "" && !cols[1].includes("ชื่อกลุ่ม")) {
@@ -126,10 +119,7 @@
                 }
             }
             document.getElementById('data-body').innerHTML = html;
-        } catch (e) { 
-            console.error(e);
-            document.getElementById('data-body').innerHTML = '<tr><td colspan="5">❌ โหลดไม่สำเร็จ กรุณารีเฟรช</td></tr>'; 
-        }
+        } catch (e) { document.getElementById('data-body').innerHTML = '<tr><td colspan="5">❌ โหลดไม่สำเร็จ</td></tr>'; }
     }
 
     function openModal(s, t) {
