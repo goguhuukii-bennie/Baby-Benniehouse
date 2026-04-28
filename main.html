@@ -13,6 +13,7 @@
 --white:#FFFFFF;
 --glow:rgba(246,165,201,0.4);
 --line:#06C755;
+--blue:#0033FF;
 }
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Mitr',sans-serif;}
 body{
@@ -82,25 +83,32 @@ color:var(--dark);
 background:var(--main);
 color:#fff;
 }
-/* ปุ่มคัดลอกแบบมินิมอล */
-.copy-box {
-    background: #fffcfd;
-    border: 1px solid #ffeef5;
+/* สไตล์กล่องบัญชี */
+.account-card {
+    border: 1px solid #f0f0f0;
     border-radius: 15px;
-    padding: 12px;
-    margin-top: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background: #fff;
     text-align: center;
 }
-.btn-copy-sm {
+.btn-copy-pill {
     background: var(--main);
     color: white;
     border: none;
-    padding: 5px 15px;
+    padding: 6px 20px;
     border-radius: 20px;
     font-size: 12px;
     cursor: pointer;
     font-family: 'Mitr';
-    margin-top: 5px;
+    margin-top: 8px;
+}
+.num-blue {
+    color: var(--blue);
+    font-size: 19px;
+    font-weight: bold;
+    text-decoration: underline;
+    margin: 3px 0;
 }
 .step{
 display:flex;
@@ -157,12 +165,11 @@ color:var(--dark);
 font-size:13px;
 border:1px solid #ffeef5;
 }
-.small{font-size:12px;opacity:.7;margin-top:10px;}
+.small{font-size:11px; opacity:.7;}
 
-/* --- ระบบแจ้งเตือน --- */
 #toast {
     visibility: hidden;
-    min-width: 180px;
+    min-width: 160px;
     background-color: var(--dark);
     color: #fff;
     text-align: center;
@@ -171,9 +178,8 @@ border:1px solid #ffeef5;
     position: fixed;
     z-index: 2000;
     left: 50%;
-    bottom: 100px;
+    bottom: 120px;
     transform: translateX(-50%);
-    font-size: 13px;
 }
 #toast.show { visibility: visible; animation: fadeInOut 2s; }
 @keyframes fadeInOut { 0%,100%{opacity:0} 20%,80%{opacity:1} }
@@ -193,68 +199,73 @@ border:1px solid #ffeef5;
 <div class="container">
 
 <div class="section center" style="border:none;box-shadow:none;background:transparent;">
-<div class="logo"><img src="Logo.png" alt="Logo"></div>
-<h1>Baby Bennie</h1>
-<p style="color:var(--dark);opacity:.8;margin:10px 0 20px;">ยินดีต้อนรับสู่ร้านของเบนนี่⭐️</p>
-<div class="badges">
-<a href="page1.html" class="badge">🎨 กลุ่มในเครือ MSB</a>
-<a href="page2.html" class="badge">✍️ ฟอนต์ในเครือ MSB</a>
-<div class="badge">🧸 สินค้าอื่นๆ</div>
-</div>
-<a href="https://drive.google.com/drive/folders/1RJzgn-LtlDH4372Vu3r7Z1_RRiZq69zZ" class="btn btn-outline" target="_blank">ตัวอย่างงาน คลิ๊ก ✨</a>
-</div>
-
-<div class="section">
-<h2>📝 ขั้นตอนการสั่ง</h2>
-<div class="step"><div class="step-num">1</div><div>คัดลอกรูปภาพหรือแจ้งชื่อสินค้า</div></div>
-<div class="step"><div class="step-num">2</div><div>แจ้งชื่อ & แนบรูปทางแชท</div></div>
-<div class="step"><div class="step-num">3</div><div>ชำระค่าสินค้าตามยอด</div></div>
-<div class="step"><div class="step-num">4</div><div>แจ้ง ID Line หรือ Email</div></div>
-<div class="step"><div class="step-num">5</div><div>ยืนยันยอดและรับสินค้า</div></div>
-<a href="https://line.me/ti/p/GKW1TDYvpB" class="btn btn-main">สั่งซื้อสินค้าที่นี่</a>
-<a href="https://line.me/ti/g/ymm_1L5V4k" class="btn btn-main" style="background:#fff; border:2px solid var(--line); color:var(--line);">🏠 เข้ากลุ่มแจ้งออเดอร์ (ตัวแทน)</a>
+    <div class="logo"><img src="Logo.png" alt="Logo"></div>
+    <h1>Baby Bennie</h1>
+    <p style="color:var(--dark);opacity:.8;margin:10px 0 20px;">ยินดีต้อนรับสู่ร้านของเบนนี่⭐️</p>
+    <div class="badges">
+        <a href="page1.html" class="badge">🎨 กลุ่มในเครือ MSB</a>
+        <a href="page2.html" class="badge">✍️ ฟอนต์ในเครือ MSB</a>
+        <div class="badge">🧸 สินค้าอื่นๆ</div>
+    </div>
+    <a href="https://drive.google.com/drive/folders/1RJzgn-LtlDH4372Vu3r7Z1_RRiZq69zZ" class="btn btn-outline" target="_blank">ตัวอย่างงาน คลิ๊ก ✨</a>
 </div>
 
 <div class="section">
-<h2>💰 เลือกชมสินค้า</h2>
-<a href="page1.html" class="price-row"><span>กลุ่มต่างๆ ในเครือ MSB</span><span class="price-tag">ดูรายการ</span></a>
-<a href="page2.html" class="price-row"><span>ฟอนต์ต่างๆ ในเครือ MSB</span><span class="price-tag">ดูรายการ</span></a>
-<div class="price-row"><span>สินค้าอื่นๆ</span><span class="price-tag">สอบถาม</span></div>
-<a href="https://line.me/ti/p/GKW1TDYvpB" class="btn btn-main">สอบถามแอดมิน</a>
+    <h2>📝 ขั้นตอนการสั่ง</h2>
+    <div class="step"><div class="step-num">1</div><div>คัดลอกรูปภาพหรือแจ้งชื่อสินค้า</div></div>
+    <div class="step"><div class="step-num">2</div><div>แจ้งชื่อ & แนบรูปทางแชท</div></div>
+    <div class="step"><div class="step-num">3</div><div>ชำระค่าสินค้าตามยอด</div></div>
+    <div class="step"><div class="step-num">4</div><div>แจ้ง ID Line หรือ Email</div></div>
+    <div class="step"><div class="step-num">5</div><div>ยืนยันยอดและรับสินค้า</div></div>
+    <a href="https://line.me/ti/p/GKW1TDYvpB" class="btn btn-main">สั่งซื้อสินค้าที่นี่</a>
+    <a href="https://line.me/ti/g/ymm_1L5V4k" class="btn btn-main" style="background:#fff; border:2px solid var(--line); color:var(--line);">🏠 เข้ากลุ่มแจ้งออเดอร์ (ตัวแทน)</a>
+</div>
+
+<div class="section">
+    <h2>💰 เลือกชมสินค้า</h2>
+    <a href="page1.html" class="price-row"><span>กลุ่มต่างๆ ในเครือ MSB</span><span class="price-tag">ดูรายการ</span></a>
+    <a href="page2.html" class="price-row"><span>ฟอนต์ต่างๆ ในเครือ MSB</span><span class="price-tag">ดูรายการ</span></a>
+    <div class="price-row"><span>สินค้าอื่นๆ</span><span class="price-tag">สอบถาม</span></div>
+    <a href="https://line.me/ti/p/GKW1TDYvpB" class="btn btn-main">สอบถามแอดมิน</a>
 </div>
 
 <div class="section center">
     <h2 style="margin-bottom: 15px;">💳 ช่องทางการชำระเงิน</h2>
     <img src="babu.png" alt="Bank" style="width: 100%; max-width: 300px; border-radius: 15px; margin-bottom: 15px;">
     
-    <div style="background: #fff; padding: 15px; border-radius: 15px; border: 1px solid #ffeef5; text-align: left;">
-        <p style="font-size: 13px; color: var(--dark); text-align:center;">ชื่อบัญชี: <b>ปริญญาศิริ ดิษรพงษ์</b></p>
+    <div style="padding: 10px 0;">
+        <p style="font-size: 14px; color: var(--dark); margin-bottom: 10px;">ชื่อบัญชี: <span style="color:var(--main); font-weight:bold;">ปริญญาศิริ ดิษรพงษ์</span></p>
         
-        <div class="copy-box">
-            <p style="color: #00A950; font-size: 12px; font-weight: 500;">ธนาคารกสิกรไทย</p>
-            <p style="font-weight: bold; font-size: 17px;">166-3-17142-5</p>
-            <button onclick="copyT('1663171425')" class="btn-copy-sm">ก๊อปเลขบัญชี ✨</button>
+        <div class="account-card">
+            <p style="color: #00A950; font-size: 13px; font-weight: 500;">ธนาคารกสิกรไทย</p>
+            <p class="num-blue">166-3-17142-5</p>
+            <button onclick="copyT('1663171425')" class="btn-copy-pill">ก๊อปเลขบัญชี ✨</button>
         </div>
 
-        <div class="copy-box">
-            <p style="color: #FF8200; font-size: 12px; font-weight: 500;">TrueMoney Wallet</p>
-            <p style="font-weight: bold; font-size: 17px;">098-532-3732</p>
-            <p style="font-size: 10px; color: #ff4d4d;">(+ค่าธรรมเนียม 1฿)</p>
-            <button onclick="copyT('0985323732')" class="btn-copy-sm">ก๊อปเบอร์วอลเล็ต 📱</button>
+        <div class="account-card">
+            <p style="color: #FF8200; font-size: 13px; font-weight: 500;">TrueMoney Wallet</p>
+            <p class="num-blue">098-532-3732</p>
+            <p style="font-size: 10px; color: var(--main);">(+ค่าธรรมเนียม 1฿)</p>
+            <button onclick="copyT('0985323732')" class="btn-copy-pill">ก๊อปเบอร์วอลเล็ต 📱</button>
         </div>
     </div>
 </div>
 
-<div class="footer">
-<p class="small" style="margin-bottom:15px; color:var(--dark);">📍 โอนเงินแล้วไม่คืนเงินทุกกรณี / เปลี่ยนช่องทางรับสินค้าก่อนร้านส่งงานเสร็จ</p>
-<div style="margin-bottom: 15px;"><img src="qr-new.png" alt="QR" style="width: 120px; border-radius: 15px;"></div>
-<a href="https://line.me/ti/p/GKW1TDYvpB" class="btn btn-main">สแกนหรือคลิกติดต่อ 🎀</a>
-<div class="socials">
-<a href="https://www.facebook.com/share/18dQmfZcfC/?mibextid=wwXIfr">Facebook</a>
-<a href="https://line.me/ti/p/GKW1TDYvpB">LINE</a>
-<a href="https://drive.google.com/drive/folders/1RJzgn-LtlDH4372Vu3r7Z1_RRiZq69zZ">Drive</a>
-</div>
-<p class="small">© 2026 Baby Bennie</p>
+<div class="footer center">
+    <p class="small" style="color:var(--main); margin-bottom:20px;">📍 โอนเงินแล้วไม่คืนเงินทุกกรณี ทบยอดใช้สำหรับครั้งถัดไป </p>
+    
+    <div style="margin-bottom: 15px;">
+        <img src="https://qr-official.line.me/gs/M_557rzzok_BW.png?oat_content=qr" alt="Line QR" style="width: 120px; border-radius: 15px; box-shadow: 0 4px 10px var(--glow);">
+    </div>
+
+    <a href="https://line.me/ti/p/GKW1TDYvpB" class="btn btn-main">สแกนหรือคลิกติดต่อ 🎀</a>
+    
+    <div class="socials">
+        <a href="https://www.facebook.com/share/18dQmfZcfC/?mibextid=wwXIfr" target="_blank">Facebook</a>
+        <a href="https://line.me/ti/p/GKW1TDYvpB" target="_blank">LINE</a>
+        <a href="https://drive.google.com/drive/folders/1RJzgn-LtlDH4372Vu3r7Z1_RRiZq69zZ" target="_blank">Drive</a>
+    </div>
+    <p class="small" style="margin-top:20px;">© 2026 Baby Bennie</p>
 </div>
 
 </div>
