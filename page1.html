@@ -13,98 +13,89 @@
     .header-img { width: 100%; display: block; border-bottom: 2px solid var(--main); }
     .title-bar { background: var(--purple); color: #333; text-align: center; padding: 10px; font-weight: 500; font-size: 18px; }
     table { width: 100%; border-collapse: collapse; }
-    th { background-color: #f8f9fa; color: var(--dark); padding: 12px 8px; border-bottom: 2px solid #eee; font-size: 14px; }
-    td { padding: 12px 8px; border-bottom: 1px solid #ffeef5; color: #555; text-align: center; font-size: 14px; }
-    .type-badge { padding: 3px 10px; border-radius: 12px; font-size: 12px; color: white; display: inline-block; min-width: 80px; }
+    th { background-color: #f8f9fa; color: var(--dark); padding: 12px 8px; border-bottom: 2px solid #eee; font-size: 13px; }
+    td { padding: 10px 5px; border-bottom: 1px solid #ffeef5; color: #555; text-align: center; font-size: 13px; vertical-align: middle; }
     
-    /* สี Badge ตามประเภทกลุ่ม */
+    /* รูปภาพสินค้า */
+    .product-img { width: 45px; height: 45px; border-radius: 8px; object-fit: cover; border: 1px solid #eee; background: #fafafa; }
+    
+    .type-badge { padding: 3px 8px; border-radius: 12px; font-size: 11px; color: white; display: inline-block; min-width: 70px; }
     .type-ชิ้นส่วน { background: #FFD25A; }
     .type-บล็อก { background: #8CD4B0; }
     .type-เอฟเฟค { background: #B298E1; }
     .type-ลายเส้น { background: #FF90C2; }
     .type-ฟอนต์ { background: #E15A7A; }
     .type-ตูน { background: #F2A25C; }
-    .type-ทั่วไป { background: #888; }
-
+    .type-ทั่วไป { background: #bbb; }
+    
     .price { font-weight: bold; color: var(--dark); }
     .btn-back { display: block; text-align: center; padding: 12px; background: var(--main); color: white; text-decoration: none; border-radius: 25px; font-weight: 500; margin: 20px; }
-    .loading-text { text-align: center; padding: 30px; color: var(--dark); font-size: 14px; }
+    .loading { text-align: center; padding: 30px; color: var(--dark); font-size: 14px; }
 </style>
 </head>
 <body>
 <div class="container">
     <div class="section">
-        <img src="12.png" alt="Header MSB Groups" class="header-img">
-        
-        <div class="title-bar">รายการกลุ่มในเครือ (อัปเดตจาก Google Sheets)</div>
-        
-        <table id="product-table">
+        <img src="12.png" alt="Header" class="header-img">
+        <div class="title-bar">รายการกลุ่มในเครือ</div>
+        <table>
             <thead>
                 <tr>
+                    <th>รูป</th>
                     <th>ชื่อกลุ่ม</th>
                     <th>ประเภท</th>
                     <th>ค่าเข้า</th>
                 </tr>
             </thead>
             <tbody id="data-body">
-                <tr><td colspan="3" class="loading-text">🎀 กำลังดึงข้อมูลล่าสุด...</td></tr>
+                <tr><td colspan="4" class="loading">🎀 กำลังดึงข้อมูลล่าสุด...</td></tr>
             </tbody>
         </table>
-        
         <a href="main.html" class="btn-back">กลับหน้าหลัก 🎀</a>
     </div>
 </div>
 
 <script>
-    // ลิงก์ CSV ที่คุณส่งมา
     const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSac_ZH2_OR2X_sT9EnZLqXuzqO7IBxJo5qChEsuR1w8RsGCBDxb1jpVLf_n3p7hBORcagesRlm4wmx/pub?gid=515002157&single=true&output=csv';
 
     async function fetchData() {
         try {
             const response = await fetch(sheetURL);
             const data = await response.text();
-            
-            // แยกข้อมูลทีละบรรทัด
-            const rows = data.split('\n');
-            
+            const rows = data.split(/\r?\n/);
             let html = '';
-            // เริ่มอ่านที่แถวที่ 4 (Index 3) ตามโครงสร้างตารางในรูปของคุณ
-            for (let i = 3; i < rows.length; i++) {
-                // แยกคอมม่าแบบละเอียด
+            
+            // เริ่มอ่านตั้งแต่แถวที่ 2 (i=1) ตามตารางใหม่ของคุณ
+            for (let i = 1; i < rows.length; i++) {
                 const cols = rows[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
                 
-                if (cols.length >= 3 && cols[0].trim() !== "") {
-                    const name = cols[0].replace(/"/g, '').trim();  // ชื่อกลุ่ม
-                    const typeText = cols[1].replace(/"/g, '').trim(); // ประเภทเต็มๆ เช่น "กลุ่มชิ้นส่วน"
-                    const price = cols[2].replace(/"/g, '').trim(); // ราคา
+                // เช็คว่ามีชื่อกลุ่ม (คอลัมน์ B) ถึงจะแสดงผล
+                if (cols.length >= 4 && cols[1].trim() !== "" && cols[1].trim() !== "ชื่อกลุ่ม") {
+                    const img = cols[0].replace(/"/g, '').trim();
+                    const name = cols[1].replace(/"/g, '').trim();
+                    const type = cols[2].replace(/"/g, '').trim();
+                    const price = cols[3].replace(/"/g, '').trim();
                     
-                    // สกัดคำว่า "กลุ่ม" ออกเพื่อเอามาใช้เลือกสี CSS
-                    let cleanType = typeText.replace('กลุ่ม', '');
+                    let cleanType = type.replace('กลุ่ม', '').trim();
                     const badgeClass = `type-${cleanType}`;
+                    
+                    // ถ้าไม่มีรูป ให้ใช้รูป Placeholder "No Img"
+                    const displayImg = img ? img : 'https://via.placeholder.com/50/fff0f6/e889b5?text=No+Img';
                     
                     html += `
                         <tr>
-                            <td>${name}</td>
-                            <td><span class="type-badge ${badgeClass}">${typeText}</span></td>
+                            <td><img src="${displayImg}" class="product-img" onerror="this.src='https://via.placeholder.com/50/fff0f6/e889b5?text=No+Img'"></td>
+                            <td style="text-align:left; padding-left:10px;">${name}</td>
+                            <td><span class="type-badge ${badgeClass}">${type}</span></td>
                             <td class="price">${price}.-</td>
-                        </tr>
-                    `;
+                        </tr>`;
                 }
             }
-            
-            if(html === '') {
-                document.getElementById('data-body').innerHTML = '<tr><td colspan="3" class="loading-text">ไม่พบข้อมูลในตาราง</td></tr>';
-            } else {
-                document.getElementById('data-body').innerHTML = html;
-            }
-            
-        } catch (error) {
-            console.error('Error fetching data:', error);
-            document.getElementById('data-body').innerHTML = '<tr><td colspan="3" class="loading-text">❌ โหลดข้อมูลไม่สำเร็จ กรุณาลองใหม่อีกครั้ง</td></tr>';
+            document.getElementById('data-body').innerHTML = html || '<tr><td colspan="4" class="loading">ไม่พบข้อมูล</td></tr>';
+        } catch (e) {
+            document.getElementById('data-body').innerHTML = '<tr><td colspan="4" class="loading">❌ โหลดไม่สำเร็จ</td></tr>';
         }
     }
-
-    // เรียกทำงานทันทีที่เปิดหน้า
     fetchData();
 </script>
 </body>
