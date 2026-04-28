@@ -108,26 +108,25 @@
             font-size: 20px;
             border: 2px solid var(--main);
             z-index: 100;
-            transition: 0.3s;
         }
     </style>
 </head>
 <body>
 
-<audio id="bgMusic" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" type="audio/mpeg">
+<audio id="bgMusic" loop preload="auto">
+    <source src="1.mp3" type="audio/mpeg">
 </audio>
 
 <div class="login-box">
     <div class="logo-area">🎀</div>
     <h2>Baby Bennie</h2>
     <p>กรุณากรอกรหัสผ่านเพื่อเข้าชมร้านค้า</p>
-    <input type="password" id="passInput" placeholder="รหัสผ่าน" autofocus>
+    <input type="password" id="passInput" placeholder="รหัสผ่าน" autofocus onfocus="playMusic()">
     <button onclick="validate()">เข้าสู่หน้าเว็บ</button>
     <div id="error" class="error-msg">❌ รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่</div>
 </div>
 
-<div class="music-control" onclick="toggleMusic()" id="musicBtn">🔈</div>
+<div class="music-control" onclick="toggleMusic()" id="musicBtn">🔇</div>
 
 <script>
     // 1. ระบบ Emoji Rain
@@ -151,23 +150,28 @@
     const audio = document.getElementById('bgMusic');
     const musicBtn = document.getElementById('musicBtn');
 
-    function toggleMusic() {
+    function playMusic() {
         if (audio.paused) {
-            audio.play();
-            musicBtn.innerText = "🔊";
-        } else {
-            audio.pause();
-            musicBtn.innerText = "🔈";
+            audio.play().then(() => {
+                musicBtn.innerText = "🎵";
+            }).catch(e => {
+                console.log("Browser blocked autoplay. Waiting for click.");
+            });
         }
     }
 
-    // คลิกครั้งแรกที่หน้าจอเพื่อให้เพลงเริ่ม (กฎความปลอดภัยเบราว์เซอร์)
-    document.body.addEventListener('click', function() {
+    function toggleMusic() {
         if (audio.paused) {
             audio.play();
-            musicBtn.innerText = "🔊";
+            musicBtn.innerText = "🎵";
+        } else {
+            audio.pause();
+            musicBtn.innerText = "🔇";
         }
-    }, { once: true });
+    }
+
+    // คลิกตรงไหนก็ได้เพื่อให้เพลงเริ่ม (กฎความปลอดภัย Browser)
+    document.body.addEventListener('click', playMusic, { once: true });
 
     // 3. ระบบรหัสผ่าน
     function validate() {
