@@ -15,12 +15,17 @@ body{ background:var(--bg); font-family:'Mitr',sans-serif; display:flex; justify
 table { width: 100%; border-collapse: collapse; }
 th { background-color: #f8f9fa; color: var(--dark); padding: 12px 8px; border-bottom: 2px solid #eee; font-size: 14px; }
 td { padding: 12px 8px; border-bottom: 1px solid #ffeef5; color: #555; text-align: center; font-size: 14px; }
-.type-badge { padding: 3px 10px; border-radius: 12px; font-size: 12px; color: white; }
-.type-blue { background: #90D5FF; }
-.type-gold { background: #FFD25A; }
-.type-pink { background: #FF90C2; }
+.type-badge { padding: 3px 10px; border-radius: 12px; font-size: 12px; color: white; display: inline-block; min-width: 85px;}
+
+/* สี Badge แยกตามคำที่พบในคอลัมน์ประเภท */
+.type-ลายมือ { background: #90D5FF; }
+.type-โปร่ง { background: #FFD25A; }
+.type-อิโมจิ { background: #FF90C2; }
+.type-ทั่วไป { background: #888; }
+
 .price { font-weight: bold; color: var(--dark); }
 .btn-back { display: block; text-align: center; padding: 12px; background: var(--main); color: white; text-decoration: none; border-radius: 25px; font-weight: 500; margin: 20px; }
+.loading-text { text-align: center; padding: 30px; color: var(--dark); font-size: 14px; }
 </style>
 </head>
 <body>
@@ -28,7 +33,7 @@ td { padding: 12px 8px; border-bottom: 1px solid #ffeef5; color: #555; text-alig
     <div class="section">
         <img src="12.png" alt="Header MSB" class="header-img">
         
-        <div class="title-bar">รายการฟอนต์</div>
+        <div class="title-bar">รายการฟอนต์ (อัปเดตอัตโนมัติ)</div>
         
         <table>
             <thead>
@@ -38,38 +43,61 @@ td { padding: 12px 8px; border-bottom: 1px solid #ffeef5; color: #555; text-alig
                     <th>ราคา</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr><td>ของเล่น</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>คะนึงฝัน</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>จอมแก่น</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>ไทยากิ</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>เจ้าแสบ</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>ชาพีช</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>ซานต้า</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>เซย์เยส</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>ดอกไม้ไฟ</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>ตัวเริ่ด</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>ถ้วยฟู</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>เนยสด</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>เผลอยิ้ม</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>เมฆซน</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>เมาฮัก</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>รสแซ่บ</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>ลองรัก</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>แสงจันทร์</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>หม่าล่าทั่ง</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>อิ่มเอม</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>หวานยิ้ม</td><td><span class="type-badge type-gold">ฟอนต์โปร่ง</span></td><td class="price">59.-</td></tr>
-                <tr><td>ตัวเล็ก</td><td><span class="type-badge type-gold">ฟอนต์โปร่ง</span></td><td class="price">59.-</td></tr>
-                <tr><td>bubblepop</td><td><span class="type-badge type-pink">ฟอนต์อิโมจิ</span></td><td class="price">59.-</td></tr>
-                <tr><td>Beloved</td><td><span class="type-badge type-pink">ฟอนต์อิโมจิ</span></td><td class="price">59.-</td></tr>
-                <tr><td>ขนมโตเกียว v.1</td><td><span class="type-badge type-blue">ฟอนต์ลายมือ</span></td><td class="price">59.-</td></tr>
-                <tr><td>ขนมโตเกียว v.2</td><td><span class="type-badge type-gold">ฟอนต์โปร่ง</span></td><td class="price">59.-</td></tr>
+            <tbody id="font-data-body">
+                <tr><td colspan="3" class="loading-text">🎀 กำลังดึงข้อมูลฟอนต์ล่าสุด...</td></tr>
             </tbody>
         </table>
         
         <a href="main.html" class="btn-back">กลับหน้าหลัก 🎀</a>
     </div>
 </div>
+
+<script>
+    // ลิงก์ CSV สำหรับหน้าฟอนต์ที่คุณส่งมา
+    const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSac_ZH2_OR2X_sT9EnZLqXuzqO7IBxJo5qChEsuR1w8RsGCBDxb1jpVLf_n3p7hBORcagesRlm4wmx/pub?gid=1494052616&single=true&output=csv';
+
+    async function fetchFontData() {
+        try {
+            const response = await fetch(sheetURL);
+            const data = await response.text();
+            const rows = data.split(/\r?\n/);
+            
+            let html = '';
+            
+            // เริ่มอ่านที่ i = 3 (แถวที่ 4 ใน Sheet)
+            for (let i = 3; i < rows.length; i++) {
+                const cols = rows[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                
+                if (cols.length >= 3 && cols[0].trim() !== "") {
+                    const fontName = cols[0].replace(/"/g, '').trim();
+                    const typeText = cols[1].replace(/"/g, '').trim();
+                    const price = cols[2].replace(/"/g, '').trim();
+                    
+                    // ตรวจสอบคำเพื่อใส่สี Badge
+                    let badgeClass = 'type-ทั่วไป';
+                    if(typeText.includes('ลายมือ')) badgeClass = 'type-ลายมือ';
+                    else if(typeText.includes('โปร่ง')) badgeClass = 'type-โปร่ง';
+                    else if(typeText.includes('อิโมจิ')) badgeClass = 'type-อิโมจิ';
+                    
+                    html += `
+                        <tr>
+                            <td>${fontName}</td>
+                            <td><span class="type-badge ${badgeClass}">${typeText}</span></td>
+                            <td class="price">${price}.-</td>
+                        </tr>
+                    `;
+                }
+            }
+            
+            document.getElementById('font-data-body').innerHTML = html || '<tr><td colspan="3" class="loading-text">ไม่พบข้อมูลฟอนต์ในแถวที่ 4 เป็นต้นไป</td></tr>';
+            
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById('font-data-body').innerHTML = '<tr><td colspan="3" class="loading-text">❌ โหลดข้อมูลไม่สำเร็จ ตรวจสอบลิงก์หรืออินเทอร์เน็ต</td></tr>';
+        }
+    }
+
+    fetchFontData();
+</script>
 </body>
 </html>
