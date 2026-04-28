@@ -47,6 +47,23 @@ margin:0 auto 20px;
 box-shadow:0 6px 20px var(--glow);
 }
 .logo img{width:100%;height:100%;object-fit:cover;}
+.badges{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:10px;
+margin-bottom:20px;
+}
+.badge{
+background:#fff;
+padding:8px 16px;
+border-radius:25px;
+box-shadow:0 4px 10px var(--glow);
+font-size:13px;
+color:var(--dark);
+text-decoration:none;
+display: inline-block;
+}
 .btn{
 display:block;
 text-align:center;
@@ -55,10 +72,6 @@ border-radius:25px;
 text-decoration:none;
 margin-top:15px;
 font-weight:500;
-cursor: pointer;
-border: none;
-width: 100%;
-font-family: 'Mitr', sans-serif;
 }
 .btn-outline{
 background:#fff;
@@ -69,28 +82,25 @@ color:var(--dark);
 background:var(--main);
 color:#fff;
 }
-.btn-agent{
-background:#fff;
-border:2px solid var(--line);
-color:var(--line);
-margin-top:10px;
-}
-.btn-copy{
-    width: 100%;
-    background: #FFF0F6;
-    color: var(--dark);
-    border: 1px solid var(--main);
-    padding: 10px;
+/* ปุ่มคัดลอกแบบมินิมอล */
+.copy-box {
+    background: #fffcfd;
+    border: 1px solid #ffeef5;
     border-radius: 15px;
-    font-size: 13px;
+    padding: 12px;
+    margin-top: 10px;
+    text-align: center;
+}
+.btn-copy-sm {
+    background: var(--main);
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 12px;
     cursor: pointer;
     font-family: 'Mitr';
-    margin-top: 8px;
-    transition: 0.3s;
-}
-.btn-copy:active{
-    background: var(--main);
-    color: #fff;
+    margin-top: 5px;
 }
 .step{
 display:flex;
@@ -149,100 +159,49 @@ border:1px solid #ffeef5;
 }
 .small{font-size:12px;opacity:.7;margin-top:10px;}
 
-/* --- อิโมจิลอย --- */
-.floating-emoji {
-    position: fixed;
-    bottom: -10%;
-    z-index: 0;
-    user-select: none;
-    pointer-events: none;
-    opacity: 0.3;
-    font-size: 24px;
-    animation: floatUp linear infinite;
-}
-@keyframes floatUp {
-    0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-    20% { opacity: 0.3; }
-    80% { opacity: 0.3; }
-    100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
-}
-
-/* --- ปุ่มควบคุมเพลง --- */
-.music-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 45px;
-    height: 45px;
-    background: var(--white);
-    border: 2px solid var(--main);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 1000;
-    box-shadow: 0 4px 12px var(--glow);
-    font-size: 20px;
-}
-
-/* --- แจ้งเตือนคัดลอก --- */
+/* --- ระบบแจ้งเตือน --- */
 #toast {
     visibility: hidden;
-    min-width: 250px;
+    min-width: 180px;
     background-color: var(--dark);
     color: #fff;
     text-align: center;
     border-radius: 20px;
-    padding: 12px;
+    padding: 8px;
     position: fixed;
     z-index: 2000;
     left: 50%;
-    bottom: 80px;
+    bottom: 100px;
     transform: translateX(-50%);
-    font-size: 14px;
+    font-size: 13px;
 }
-#toast.show {
-    visibility: visible;
-    animation: fadeInOut 2s;
-}
-@keyframes fadeInOut {
-    0% { opacity: 0; bottom: 60px; }
-    20% { opacity: 1; bottom: 80px; }
-    80% { opacity: 1; bottom: 80px; }
-    100% { opacity: 0; bottom: 60px; }
-}
+#toast.show { visibility: visible; animation: fadeInOut 2s; }
+@keyframes fadeInOut { 0%,100%{opacity:0} 20%,80%{opacity:1} }
+
+.floating-emoji { position: fixed; bottom: -10%; z-index: 0; pointer-events: none; opacity: 0.3; animation: floatUp linear infinite; }
+@keyframes floatUp { 0%{transform:translateY(0) rotate(0deg);opacity:0} 20%,80%{opacity:0.3} 100%{transform:translateY(-110vh) rotate(360deg);opacity:0} }
+.music-btn { position: fixed; bottom: 20px; right: 20px; width: 45px; height: 45px; background: var(--white); border: 2px solid var(--main); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 1000; font-size: 20px; }
 </style>
 </head>
 <body>
 
 <div id="toast">คัดลอกแล้วค่ะ 🌷</div>
-
-<audio id="bgMusic" loop preload="auto">
-    <source src="1.mp3" type="audio/mpeg">
-    <source src="https://www.chosic.com/wp-content/uploads/2021/04/Morning-Joy.mp3" type="audio/mpeg">
-</audio>
-
+<audio id="bgMusic" loop preload="auto"><source src="1.mp3" type="audio/mpeg"></audio>
 <div class="music-btn" onclick="toggleMusic()" id="musicIcon">🔇</div>
 <div id="emoji-container"></div>
 
 <div class="container">
 
 <div class="section center" style="border:none;box-shadow:none;background:transparent;">
-<div class="logo">
-<img src="Logo.png" alt="Baby Bennie Logo">
-</div>
+<div class="logo"><img src="Logo.png" alt="Logo"></div>
 <h1>Baby Bennie</h1>
-<p style="color:var(--dark);opacity:.8;margin:10px 0 20px;">
-ยินดีต้อนรับสู่ร้านของเบนนี่⭐️
-</p>
+<p style="color:var(--dark);opacity:.8;margin:10px 0 20px;">ยินดีต้อนรับสู่ร้านของเบนนี่⭐️</p>
 <div class="badges">
 <a href="page1.html" class="badge">🎨 กลุ่มในเครือ MSB</a>
 <a href="page2.html" class="badge">✍️ ฟอนต์ในเครือ MSB</a>
+<div class="badge">🧸 สินค้าอื่นๆ</div>
 </div>
-<a href="https://drive.google.com/drive/folders/1RJzgn-LtlDH4372Vu3r7Z1_RRiZq69zZ" class="btn btn-outline" target="_blank">
-ตัวอย่างงาน คลิ๊ก ✨
-</a>
+<a href="https://drive.google.com/drive/folders/1RJzgn-LtlDH4372Vu3r7Z1_RRiZq69zZ" class="btn btn-outline" target="_blank">ตัวอย่างงาน คลิ๊ก ✨</a>
 </div>
 
 <div class="section">
@@ -253,47 +212,47 @@ border:1px solid #ffeef5;
 <div class="step"><div class="step-num">4</div><div>แจ้ง ID Line หรือ Email</div></div>
 <div class="step"><div class="step-num">5</div><div>ยืนยันยอดและรับสินค้า</div></div>
 <a href="https://line.me/ti/p/GKW1TDYvpB" class="btn btn-main">สั่งซื้อสินค้าที่นี่</a>
-<a href="https://line.me/ti/g/ymm_1L5V4k" class="btn btn-agent">🏠 เข้ากลุ่มแจ้งออเดอร์ (ตัวแทน)</a>
+<a href="https://line.me/ti/g/ymm_1L5V4k" class="btn btn-main" style="background:#fff; border:2px solid var(--line); color:var(--line);">🏠 เข้ากลุ่มแจ้งออเดอร์ (ตัวแทน)</a>
+</div>
+
+<div class="section">
+<h2>💰 เลือกชมสินค้า</h2>
+<a href="page1.html" class="price-row"><span>กลุ่มต่างๆ ในเครือ MSB</span><span class="price-tag">ดูรายการ</span></a>
+<a href="page2.html" class="price-row"><span>ฟอนต์ต่างๆ ในเครือ MSB</span><span class="price-tag">ดูรายการ</span></a>
+<div class="price-row"><span>สินค้าอื่นๆ</span><span class="price-tag">สอบถาม</span></div>
+<a href="https://line.me/ti/p/GKW1TDYvpB" class="btn btn-main">สอบถามแอดมิน</a>
 </div>
 
 <div class="section center">
     <h2 style="margin-bottom: 15px;">💳 ช่องทางการชำระเงิน</h2>
-    <div style="margin-bottom: 15px; display: flex; justify-content: center;">
-        <img src="babu.png" alt="บัญชีธนาคาร" style="width: 100%; max-width: 300px; border-radius: 15px; border: 1px solid #ffeef5;">
-    </div>
+    <img src="babu.png" alt="Bank" style="width: 100%; max-width: 300px; border-radius: 15px; margin-bottom: 15px;">
     
-    <div style="background: #fff; padding: 15px; border-radius: 15px; border: 1px solid #ffeef5; margin-bottom: 15px;">
-        <p style="color: var(--dark); font-size: 14px; margin-bottom: 5px;">ชื่อบัญชี: <b>ปริญญาศิริ ดิษรพงษ์</b></p>
-        <hr style="border: none; border-top: 1px solid #fdf0f5; margin: 10px 0;">
+    <div style="background: #fff; padding: 15px; border-radius: 15px; border: 1px solid #ffeef5; text-align: left;">
+        <p style="font-size: 13px; color: var(--dark); text-align:center;">ชื่อบัญชี: <b>ปริญญาศิริ ดิษรพงษ์</b></p>
         
-        <div style="margin-bottom: 15px;">
-            <p style="color: #00A950; font-weight: 500; font-size: 14px;">ธนาคารกสิกรไทย</p>
-            <p style="font-weight: bold; color: #333; font-size: 19px;">166-3-17142-5</p>
-            <button onclick="copyBtn('1663171425', 'คัดลอกเลขบัญชีแล้วค่ะ 🌷')" class="btn-copy">ก๊อปเลขบัญชี ✨</button>
+        <div class="copy-box">
+            <p style="color: #00A950; font-size: 12px; font-weight: 500;">ธนาคารกสิกรไทย</p>
+            <p style="font-weight: bold; font-size: 17px;">166-3-17142-5</p>
+            <button onclick="copyT('1663171425')" class="btn-copy-sm">ก๊อปเลขบัญชี ✨</button>
         </div>
-        
-        <div>
-            <p style="color: #FF8200; font-weight: 500; font-size: 14px;">TrueMoney Wallet</p>
-            <p style="font-weight: bold; color: #333; font-size: 19px;">098-532-3732</p>
-            <p style="font-size: 11px; color: #ff4d4d; margin-top: 2px;">(โอนวอลเล็ต +ค่าธรรมเนียม 1฿)</p>
-            <button onclick="copyBtn('0985323732', 'คัดลอกเบอร์วอลเล็ตแล้วค่ะ 🌷')" class="btn-copy">ก๊อปเบอร์วอลเล็ต 📱</button>
-        </div>
-    </div>
 
-    <div style="padding: 10px; border-radius: 15px; background: #fff5f8; border: 1px dashed var(--main);">
-        <p style="color: #d63384; font-weight: 500; font-size: 13px;">“โอนแล้วรบกวนส่งสลิปในแชทด้วยน้า”</p>
+        <div class="copy-box">
+            <p style="color: #FF8200; font-size: 12px; font-weight: 500;">TrueMoney Wallet</p>
+            <p style="font-weight: bold; font-size: 17px;">098-532-3732</p>
+            <p style="font-size: 10px; color: #ff4d4d;">(+ค่าธรรมเนียม 1฿)</p>
+            <button onclick="copyT('0985323732')" class="btn-copy-sm">ก๊อปเบอร์วอลเล็ต 📱</button>
+        </div>
     </div>
 </div>
 
-<div class="footer center">
-<div style="margin-bottom: 15px;">
-    <img src="qr-new.png" alt="Line QR" style="width: 120px; border-radius: 15px; box-shadow: 0 4px 10px var(--glow);">
-</div>
+<div class="footer">
+<p class="small" style="margin-bottom:15px; color:var(--dark);">📍 โอนเงินแล้วไม่คืนเงินทุกกรณี / เปลี่ยนช่องทางรับสินค้าก่อนร้านส่งงานเสร็จ</p>
+<div style="margin-bottom: 15px;"><img src="qr-new.png" alt="QR" style="width: 120px; border-radius: 15px;"></div>
 <a href="https://line.me/ti/p/GKW1TDYvpB" class="btn btn-main">สแกนหรือคลิกติดต่อ 🎀</a>
 <div class="socials">
-<a href="https://www.facebook.com/share/18dQmfZcfC/?mibextid=wwXIfr" target="_blank">Facebook</a>
-<a href="https://line.me/ti/p/GKW1TDYvpB" target="_blank">LINE</a>
-<a href="https://drive.google.com/drive/folders/1RJzgn-LtlDH4372Vu3r7Z1_RRiZq69zZ" target="_blank">Drive</a>
+<a href="https://www.facebook.com/share/18dQmfZcfC/?mibextid=wwXIfr">Facebook</a>
+<a href="https://line.me/ti/p/GKW1TDYvpB">LINE</a>
+<a href="https://drive.google.com/drive/folders/1RJzgn-LtlDH4372Vu3r7Z1_RRiZq69zZ">Drive</a>
 </div>
 <p class="small">© 2026 Baby Bennie</p>
 </div>
@@ -301,43 +260,27 @@ border:1px solid #ffeef5;
 </div>
 
 <script>
-    function copyBtn(text, msg) {
-        const el = document.createElement('textarea');
-        el.value = text;
-        document.body.appendChild(el);
-        el.select();
-        document.execCommand('copy');
-        document.body.removeChild(el);
-        const toast = document.getElementById("toast");
-        toast.innerText = msg;
-        toast.className = "show";
-        setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 2000);
-    }
-
-    const emojis = ['🐶', '⭐️', '🌷', '🩷'];
-    const container = document.getElementById('emoji-container');
-    function createEmoji() {
-        const emoji = document.createElement('div');
-        emoji.className = 'floating-emoji';
-        emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-        emoji.style.left = Math.random() * 100 + 'vw';
-        emoji.style.fontSize = (Math.random() * 20 + 20) + 'px';
-        const duration = Math.random() * 10 + 10;
-        emoji.style.animationDuration = duration + 's';
-        container.appendChild(emoji);
-        setTimeout(() => { emoji.remove(); }, duration * 1000);
-    }
-    setInterval(createEmoji, 1500);
-
-    const audio = document.getElementById('bgMusic');
-    const icon = document.getElementById('musicIcon');
-    function toggleMusic() {
-        if (audio.paused) { audio.play(); icon.innerText = "🎵"; } 
-        else { audio.pause(); icon.innerText = "🔇"; }
-    }
-    document.body.addEventListener('click', () => {
-        if (audio.paused) { audio.play(); icon.innerText = "🎵"; }
-    }, { once: true });
+function copyT(t) {
+    const el = document.createElement('textarea'); el.value = t; document.body.appendChild(el);
+    el.select(); document.execCommand('copy'); document.body.removeChild(el);
+    const toast = document.getElementById("toast"); toast.className = "show";
+    setTimeout(()=>{toast.className = ""}, 2000);
+}
+const emojis = ['🐶', '⭐️', '🌷', '🩷'];
+function createEmoji() {
+    const e = document.createElement('div'); e.className = 'floating-emoji';
+    e.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+    e.style.left = Math.random()*100+'vw'; e.style.fontSize = (Math.random()*20+20)+'px';
+    e.style.animationDuration = (Math.random()*10+10)+'s';
+    document.getElementById('emoji-container').appendChild(e);
+    setTimeout(()=>e.remove(), 10000);
+}
+setInterval(createEmoji, 1500);
+function toggleMusic() { 
+    const a = document.getElementById('bgMusic');
+    if(a.paused){a.play(); musicIcon.innerText="🎵"} else {a.pause(); musicIcon.innerText="🔇"}
+}
+document.body.addEventListener('click', ()=>{const a=document.getElementById('bgMusic'); if(a.paused){a.play(); musicIcon.innerText="🎵"}}, {once:true});
 </script>
 </body>
 </html>
